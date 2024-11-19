@@ -1,4 +1,4 @@
-package spring.QueComemos;
+package spring.QueComemos.configuracion;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
