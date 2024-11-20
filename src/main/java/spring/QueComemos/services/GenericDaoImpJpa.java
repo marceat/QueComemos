@@ -93,6 +93,22 @@ public class GenericDaoImpJpa<T> implements DaoGenerico<T> {
 		
 		return eliminado;
 	}
+	
+	@Override
+	public boolean eliminarTodo() {
+		boolean eliminado=false;
+		
+		try {
+			this.entityManager.createQuery("DELETE FROM " + persistentClass.getSimpleName()).executeUpdate();
+			eliminado=true;
+			
+		} catch (Exception e) {
+            e.printStackTrace();
+            eliminado=false;
+        } 
+		
+		return eliminado;
+	}
 
 	@Override
 	public List<T> listar() {
@@ -105,6 +121,10 @@ public class GenericDaoImpJpa<T> implements DaoGenerico<T> {
 		    e.printStackTrace();        
 		}
 		return lista;
+	}
+	
+	public boolean existe(Comida unaComida) {
+		return obtenerPorId(unaComida.getId()).isPresent();
 	}
 
 }
