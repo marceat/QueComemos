@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import spring.QueComemos.model.UsuarioGeneral;
 import spring.QueComemos.services.UsuarioGeneralDAOjpa;
+import org.springframework.http.MediaType;
 
 import java.util.List;
 import java.util.Optional;
