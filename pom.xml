@@ -143,6 +143,11 @@
 </dependency>
 
 
+		<dependency>
+			<groupId>BlogDeMensajes</groupId>
+			<artifactId>BlogDeMensajes</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
