@@ -1,10 +1,12 @@
 package spring.QueComemos.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +21,7 @@ import spring.QueComemos.model.*;
 import spring.QueComemos.services.ComidaDAOjpa;
 
 @RestController
-@RequestMapping("/api/comida")
+@RequestMapping(value="/api/comida",produces = {MediaType.APPLICATION_JSON_VALUE})
 public class ComidaController {
 	
 	@Autowired
@@ -35,20 +37,20 @@ public class ComidaController {
 			System.out.println("Comida con id "+id+" no encontrada.");
 			return new ResponseEntity<Comida>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Comida>(HttpStatus.OK);
+		return new ResponseEntity<Comida>(comidaObtenida.get(),HttpStatus.OK);
 	}
 	
 	//================================ LISTAR  =====================================
 	
 	@GetMapping
 	public ResponseEntity<List<Comida>> listarComidas(){
-		List<Comida> comidasObtenidas = comidaService.listar();
+		List<Comida> comidasObtenidas = (ArrayList<Comida>) comidaService.listar();
 		
 		if (comidasObtenidas.isEmpty()) {
 			System.out.println("No se encontraron comidas disponibles.");
 			return new ResponseEntity<List<Comida>>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Comida>>(HttpStatus.OK);
+		return new ResponseEntity<List<Comida>>(comidasObtenidas,HttpStatus.OK);
 	}
 	
 	//================================ AGREGAR  =====================================

@@ -1,5 +1,6 @@
 package spring.QueComemos.configuracion;
 import jakarta.transaction.Transactional;
+import spring.QueComemos.model.Comida;
 import spring.QueComemos.model.Menu;
 import spring.QueComemos.model.Sugerencia;
 import spring.QueComemos.model.UsuarioGeneral;
@@ -29,6 +30,8 @@ public class DatabaseInitializer {
 	
 	@Autowired
 	private MenuDAOjpa funcionesMenu;
+	
+	
 
 
     @Bean
@@ -60,7 +63,16 @@ public class DatabaseInitializer {
     		funcionesMenu.agregar(menu3);
     		funcionesMenu.agregar(menu4);
     		
+    		//===================================== CREAMOS COMIDAS =====================================
+    		Comida nuevaComida1 = new Comida("EMPANADA DE CARNE", 1500, 5);
+    		Comida nuevaComida2 = new Comida("EMPANADA DE POLLO", 1500, 5);
+    		Comida nuevaComida3 = new Comida("EMPANADA DE ESPINACA", 1500, 5);
+    		Comida nuevaComida4 = new Comida("EMPANADA DE HUMITA", 1200, 5);
     		
+    		funcionesComida.agregar(nuevaComida1);
+    		funcionesComida.agregar(nuevaComida2);
+    		funcionesComida.agregar(nuevaComida3);
+    		funcionesComida.agregar(nuevaComida4);
     	};
     }
 }

@@ -112,15 +112,8 @@ public class GenericDaoImpJpa<T> implements DaoGenerico<T> {
 
 	@Override
 	public List<T> listar() {
-		List<T> lista = null;
-				
-		try {
-			Query query = (Query) this.entityManager.createQuery("SELECT t FROM " + this.persistentClass.getSimpleName() + " t", persistentClass).getResultList();
-			lista = query.getResultList();
-		} catch (Exception e) {
-		    e.printStackTrace();        
-		}
-		return lista;
+		return this.entityManager.createQuery("SELECT t FROM " + this.persistentClass.getSimpleName() + " t", persistentClass).getResultList();
+			
 	}
 	
 	public boolean existe(Comida unaComida) {
