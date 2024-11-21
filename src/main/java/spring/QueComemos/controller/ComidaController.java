@@ -55,11 +55,11 @@ public class ComidaController {
 	
 	//================================ AGREGAR  =====================================
 	
-	@PostMapping
+	@PostMapping("/agregar")
 	public ResponseEntity crearComida(@RequestBody Comida comida){
 		System.out.println("Creando la comida: "+comida.getNombre());
 		
-		if (comidaService.existe(comida)) {
+		if (comidaService.existe(comida.getId())) {
 			System.out.println("Ya existe en la base de datos la comida id:"+comida.getId()+" - "+comida.getNombre()+" - $"+
 			comida.getPrecio()+" - "+comida.getStock());
 			return new ResponseEntity(HttpStatus.CONFLICT);
@@ -69,7 +69,7 @@ public class ComidaController {
 	}
 	
 	//================================ ACTUALIZAR  =====================================
-	@PutMapping("/{id}")
+	@PutMapping("/actualizar/{id}")
 	public ResponseEntity<Comida> actualizarComida(@PathVariable("id") int id, @RequestBody Comida unaComida){
 		System.out.println("Actualizando la comida con id: "+unaComida.getId());
 		

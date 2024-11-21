@@ -116,8 +116,8 @@ public class GenericDaoImpJpa<T> implements DaoGenerico<T> {
 			
 	}
 	
-	public boolean existe(Comida unaComida) {
-		return obtenerPorId(unaComida.getId()).isPresent();
+	public boolean existe(int id) {
+		return obtenerPorId(id).isPresent();
 	}
 
 }
