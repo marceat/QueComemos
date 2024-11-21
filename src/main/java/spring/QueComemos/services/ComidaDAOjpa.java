@@ -1,6 +1,8 @@
 package spring.QueComemos.services;
 
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 import spring.QueComemos.dao.DaoGenerico;
 import spring.QueComemos.model.Comida;
@@ -11,6 +13,5 @@ public class ComidaDAOjpa extends GenericDaoImpJpa<Comida> implements DaoGeneric
 	public ComidaDAOjpa() {
 		super(Comida.class);
 	}
-	
 	
 }
