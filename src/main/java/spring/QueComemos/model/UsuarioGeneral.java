@@ -22,13 +22,13 @@ public class UsuarioGeneral {
 	public UsuarioGeneral() {
 		
 	}
-	public UsuarioGeneral(int unDni, String unNombre, String unApellido, String unEmail, String unaContraseña, String preferenciasAlimentarias,String unRol, String foto) {
+	public UsuarioGeneral(int unDni, String unNombre, String unApellido, String unEmail, String unaContraseña, String preferencia,String unRol, String foto) {
 		this.dni = unDni;
 		this.nombre = unNombre;
 		this.apellido = unApellido;
 		this.email = unEmail;
 		this.contraseña = unaContraseña;
-		this.preferenciasAlimentarias = preferenciasAlimentarias;
+		this.preferenciasAlimentarias = preferencia;
 		this.rol=unRol;
 		this.fotoPerfil = foto;
 		
@@ -65,8 +65,8 @@ public class UsuarioGeneral {
 		return preferenciasAlimentarias;
 	}
 
-	public void setPreferenciasAlimentarias(String preferenciasAlientarias) {
-		this.preferenciasAlimentarias = preferenciasAlientarias;
+	public void setPreferenciasAlimentarias(String preferencia) {
+		this.preferenciasAlimentarias = preferencia;
 	}
 
 	public void setContraseña(String contraseña) {
