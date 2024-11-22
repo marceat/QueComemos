@@ -60,24 +60,31 @@ public class UsuarioController {
     }
 
     //================================ ACTUALIZAR  =====================================
-    @PutMapping("/actualizar/{id}")
-    public ResponseEntity<UsuarioGeneral> actualizarUsuario(@PathVariable("id") int id, @RequestBody UsuarioGeneral unUsuario) {
-        System.out.println("Actualizando el usuario con id: " + unUsuario.getDni());
+ 
+        @PutMapping("/actualizar/{id}")
+        public ResponseEntity<UsuarioGeneral> actualizarUsuario(@PathVariable("id") int id, @RequestBody UsuarioGeneral unUsuario) {
+            System.out.println("Actualizando el usuario con id: " + unUsuario.getDni());
 
-        Optional<UsuarioGeneral> usuarioActual = usuarioService.obtenerPorId(id);
+            Optional<UsuarioGeneral> usuarioActual = usuarioService.obtenerPorId(id);
 
-        if (!usuarioActual.isPresent()) {
-            System.out.println("Usuario con id:" + id + ", no encontrado.");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            if (!usuarioActual.isPresent()) {
+                System.out.println("Usuario con id:" + id + ", no encontrado.");
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            UsuarioGeneral usuario = usuarioActual.get();
+            usuario.setNombre(unUsuario.getNombre());
+            usuario.setEmail(unUsuario.getEmail());
+            usuario.setContraseña(unUsuario.getContraseña());
+            usuario.setPreferenciasAlimentarias(unUsuario.getPreferenciasAlimentarias());
+            usuario.setRol(unUsuario.getRol());
+            usuario.setFotoPerfil(unUsuario.getFotoPerfil());
+
+            usuarioService.actualizar(usuario);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
+    
 
-        UsuarioGeneral usuario = usuarioActual.get();
-        usuario.setNombre(unUsuario.getNombre());
-        usuario.setEmail(unUsuario.getEmail());
-
-        usuarioService.actualizar(usuario);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
     //================================ ELIMINAR   =====================================
     @DeleteMapping("/{id}")

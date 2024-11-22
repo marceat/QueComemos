@@ -31,7 +31,7 @@ public class TestVenta {
 	
 	@BeforeEach
 	void setUp() {
-		usuario= new UsuarioGeneral(23435543,"Dario","Bazi","Dario123@gmail.com","12345"," "," ");
+		usuario= new UsuarioGeneral(23435543,"Dario","Bazi","Dario123@gmail.com","12345","Vegano","Usuario","sin_foto");
 		
 		venta1= new Venta(new Date(23/05/2024),5021.33," ",usuario,null,null);
 		venta2= new Venta(new Date(13/12/2023),6021.33," ",usuario,null,null);

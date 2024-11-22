@@ -15,21 +15,23 @@ public class UsuarioGeneral {
 	private String apellido;
 	private String email;
 	private String contraseña;
-	private String preferenciasAlientarias;
+	private String preferenciasAlimentarias;
 	private String rol;
 	private String fotoPerfil;
 	
 	public UsuarioGeneral() {
 		
 	}
-	public UsuarioGeneral(int unDni, String unNombre, String unApellido, String unEmail, String unaContraseña, String prefe, String foto) {
+	public UsuarioGeneral(int unDni, String unNombre, String unApellido, String unEmail, String unaContraseña, String preferenciasAlimentarias,String unRol, String foto) {
 		this.dni = unDni;
 		this.nombre = unNombre;
 		this.apellido = unApellido;
 		this.email = unEmail;
 		this.contraseña = unaContraseña;
-		this.preferenciasAlientarias = prefe;
+		this.preferenciasAlimentarias = preferenciasAlimentarias;
+		this.rol=unRol;
 		this.fotoPerfil = foto;
+		
 	}
 	
 	public int getDni() {
@@ -59,12 +61,12 @@ public class UsuarioGeneral {
 	public String getContraseña() {
 		return contraseña;
 	}
-	public String getPreferenciasAlientarias() {
-		return preferenciasAlientarias;
+	public String getPreferenciasAlimentarias() {
+		return preferenciasAlimentarias;
 	}
 
-	public void setPreferenciasAlientarias(String preferenciasAlientarias) {
-		this.preferenciasAlientarias = preferenciasAlientarias;
+	public void setPreferenciasAlimentarias(String preferenciasAlientarias) {
+		this.preferenciasAlimentarias = preferenciasAlientarias;
 	}
 
 	public void setContraseña(String contraseña) {

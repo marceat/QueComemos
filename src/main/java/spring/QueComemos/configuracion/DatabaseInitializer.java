@@ -39,8 +39,8 @@ public class DatabaseInitializer {
     	return (args) -> {
     		
     		//===================================== CREAMOS USUARIOS ========================================
-    		UsuarioGeneral usuario1=new UsuarioGeneral(46543123,"Luz","Martinez","Luz123@gmail.com","12345","","");
-    		UsuarioGeneral usuario2=new UsuarioGeneral(30399203,"Brenda","Poch","brenda123@gmail.com","12345","","");
+    		UsuarioGeneral usuario1=new UsuarioGeneral(46543123,"Luz","Martinez","Luz123@gmail.com","123456","Vegano","Usuario","sin_foto");
+    		UsuarioGeneral usuario2=new UsuarioGeneral(30399203,"Brenda","Poch","brenda123@gmail.com","232323","Sin restricciones","Usuario","sin_foto");
     		
     		funcionesUsuario.agregar(usuario1);
     		funcionesUsuario.agregar(usuario2);

@@ -35,9 +35,9 @@ public class TestSugerencia {
 	@BeforeEach
 	void setUp() {
 		
-	usuario= new UsuarioGeneral(43323456,"Pedro","Rios","Pedro@gmail.com","12345"," "," ");
+	usuario= new UsuarioGeneral(43323456,"Pedro","Rios","Pedro@gmail.com","12345","Vegano","Usuario","sin_foto");
 	sugerencia1= new Sugerencia("mala atención","atención",usuario);
-	usuario2= new UsuarioGeneral(35456123,"Juana","Diaz","JuanaD@gmail.com","23234"," "," ");
+	usuario2= new UsuarioGeneral(35456123,"Juana","Diaz","JuanaD@gmail.com","23234","Vegano","Usuario","sin_foto");
 	sugerencia2= new Sugerencia("tardan mucho en los pedidos","atencion",usuario);
 	sugerencia3= new Sugerencia("podrian agregar mas mesas al buffet","infraestructura",usuario2);
 	}

@@ -31,9 +31,9 @@ public class TestUsuarioGeneral {
 	
 	@BeforeEach
 	void setUp() {
-		usuario1= new UsuarioGeneral(3122323,"Leonardo","Marin","LeoMar@gmail.com","21234"," "," ");
-		usuario2=new UsuarioGeneral(46543123,"Luz","Martinez","Luz123@gmail.com","12345","","");
-		usuario3=new UsuarioGeneral(46543123,"Brenda","Poch","brenda123@gmail.com","12345","","");
+		usuario1= new UsuarioGeneral(3122323,"Leonardo","Marin","LeoMar@gmail.com","21234","Vegano","Usuario","sin_foto");
+		usuario2=new UsuarioGeneral(46543123,"Luz","Martinez","Luz123@gmail.com","12345","Vegetariano","Usuario","sin_foto");
+		usuario3=new UsuarioGeneral(46543123,"Laura","Venitez","Lau123@gmail.com","202060","Sin Restricciones","Usuario","sin_foto");
 	
 	}
 		@Test
