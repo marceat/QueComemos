@@ -74,6 +74,7 @@ public class UsuarioController {
 
             UsuarioGeneral usuario = usuarioActual.get();
             usuario.setNombre(unUsuario.getNombre());
+            usuario.setApellido(unUsuario.getApellido());
             usuario.setEmail(unUsuario.getEmail());
             usuario.setContraseña(unUsuario.getContraseña());
             usuario.setPreferenciasAlimentarias(unUsuario.getPreferenciasAlimentarias());
