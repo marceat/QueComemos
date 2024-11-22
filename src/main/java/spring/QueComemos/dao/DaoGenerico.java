@@ -13,5 +13,6 @@ public interface DaoGenerico<T> {
 	boolean eliminar(T entity);
 	List<T> listar();
 	T persistir(T entity);
+	boolean eliminarTodo();
 	
 }

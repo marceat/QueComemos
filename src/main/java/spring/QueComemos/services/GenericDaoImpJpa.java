@@ -93,18 +93,31 @@ public class GenericDaoImpJpa<T> implements DaoGenerico<T> {
 		
 		return eliminado;
 	}
+	
+	@Override
+	public boolean eliminarTodo() {
+		boolean eliminado=false;
+		
+		try {
+			this.entityManager.createQuery("DELETE FROM " + persistentClass.getSimpleName()).executeUpdate();
+			eliminado=true;
+			
+		} catch (Exception e) {
+            e.printStackTrace();
+            eliminado=false;
+        } 
+		
+		return eliminado;
+	}
 
 	@Override
 	public List<T> listar() {
-		List<T> lista = null;
-				
-		try {
-			Query query = (Query) this.entityManager.createQuery("SELECT t FROM " + this.persistentClass.getSimpleName() + " t", persistentClass).getResultList();
-			lista = query.getResultList();
-		} catch (Exception e) {
-		    e.printStackTrace();        
-		}
-		return lista;
+		return this.entityManager.createQuery("SELECT t FROM " + this.persistentClass.getSimpleName() + " t", persistentClass).getResultList();
+			
+	}
+	
+	public boolean existe(int id) {
+		return obtenerPorId(id).isPresent();
 	}
 
 }
