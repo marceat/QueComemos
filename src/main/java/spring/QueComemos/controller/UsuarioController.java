@@ -3,8 +3,9 @@ package spring.QueComemos.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.validation.Valid;
 import spring.QueComemos.model.UsuarioGeneral;
 import spring.QueComemos.services.UsuarioGeneralDAOjpa;
 import org.springframework.http.MediaType;
@@ -14,12 +15,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/api/usuario", produces = {MediaType.APPLICATION_JSON_VALUE})
+@Validated
 public class UsuarioController {
-
     @Autowired
     UsuarioGeneralDAOjpa usuarioService;
 
-    //================================ OBTENER  =====================================
+    //================================ OBTENER =====================================
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioGeneral> obtenerUsuarioPorId(@PathVariable("id") int id) {
@@ -32,7 +33,7 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarioObtenido.get(), HttpStatus.OK);
     }
 
-    //================================ LISTAR  =====================================
+    //================================ LISTAR =====================================
 
     @GetMapping
     public ResponseEntity<List<UsuarioGeneral>> listarUsuarios() {
@@ -45,10 +46,10 @@ public class UsuarioController {
         return new ResponseEntity<>(usuariosObtenidos, HttpStatus.OK);
     }
 
-    //================================ AGREGAR  =====================================
+    //================================ AGREGAR =====================================
 
     @PostMapping("/agregar")
-    public ResponseEntity<UsuarioGeneral> crearUsuario(@RequestBody UsuarioGeneral usuario) {
+    public ResponseEntity<UsuarioGeneral> crearUsuario(@Valid @RequestBody UsuarioGeneral usuario) {
         System.out.println("Creando el usuario: " + usuario.getNombre());
 
         if (usuarioService.existe(usuario.getDni())) {
@@ -59,39 +60,37 @@ public class UsuarioController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //================================ ACTUALIZAR  =====================================
- 
-        @PutMapping("/actualizar/{id}")
-        public ResponseEntity<UsuarioGeneral> actualizarUsuario(@PathVariable("id") int id, @RequestBody UsuarioGeneral unUsuario) {
-            System.out.println("Actualizando el usuario con id: " + unUsuario.getDni());
+    //================================ ACTUALIZAR =====================================
 
-            Optional<UsuarioGeneral> usuarioActual = usuarioService.obtenerPorId(id);
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<UsuarioGeneral> actualizarUsuario(@PathVariable("id") int id, @Valid @RequestBody UsuarioGeneral unUsuario) {
+        System.out.println("Actualizando el usuario con id: " + unUsuario.getDni());
 
-            if (!usuarioActual.isPresent()) {
-                System.out.println("Usuario con id:" + id + ", no encontrado.");
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+        Optional<UsuarioGeneral> usuarioActual = usuarioService.obtenerPorId(id);
 
-            UsuarioGeneral usuario = usuarioActual.get();
-            usuario.setNombre(unUsuario.getNombre());
-            usuario.setApellido(unUsuario.getApellido());
-            usuario.setEmail(unUsuario.getEmail());
-            usuario.setContraseña(unUsuario.getContraseña());
-            usuario.setPreferenciasAlimentarias(unUsuario.getPreferenciasAlimentarias());
-            usuario.setRol(unUsuario.getRol());
-            usuario.setFotoPerfil(unUsuario.getFotoPerfil());
-
-            usuarioService.actualizar(usuario);
-            return new ResponseEntity<>(HttpStatus.OK);
+        if (!usuarioActual.isPresent()) {
+            System.out.println("Usuario con id:" + id + ", no encontrado.");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    
 
+        UsuarioGeneral usuario = usuarioActual.get();
+        usuario.setNombre(unUsuario.getNombre());
+        usuario.setApellido(unUsuario.getApellido());
+        usuario.setEmail(unUsuario.getEmail());
+        usuario.setContraseña(unUsuario.getContraseña());
+        usuario.setPreferenciasAlimentarias(unUsuario.getPreferenciasAlimentarias());
+        usuario.setRol(unUsuario.getRol());
+        usuario.setFotoPerfil(unUsuario.getFotoPerfil());
 
-    //================================ ELIMINAR   =====================================
+        usuarioService.actualizar(usuario);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //================================ ELIMINAR =====================================
+
     @DeleteMapping("/{id}")
     public ResponseEntity<UsuarioGeneral> eliminarUsuario(@PathVariable("id") int id) {
         System.out.println("Obteniendo y eliminando el usuario con id: " + id);
-
         Optional<UsuarioGeneral> usuarioObtenido = usuarioService.obtenerPorId(id);
 
         if (!usuarioObtenido.isPresent()) {
@@ -103,13 +102,12 @@ public class UsuarioController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    //================================ ELIMINAR TODOS  =====================================
-    @DeleteMapping
-    public ResponseEntity<UsuarioGeneral> eliminarTodos() {
-        System.out.println("Eliminando todos los usuarios.");
+    //================================ ELIMINAR TODOS =====================================
 
+    @DeleteMapping
+    public ResponseEntity<Void> eliminarTodos() {
+        System.out.println("Eliminando todos los usuarios.");
         usuarioService.eliminarTodo();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-

@@ -1,98 +1,122 @@
 package spring.QueComemos.model;
-import org.springframework.stereotype.Component;
 
-import jakarta.persistence.*;
+
+import org.springframework.stereotype.Component;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="MENU")
 @Component("Menu")
 public class Menu {
-	
-	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	private String nombreMenu;
-	private String entrada;
-	private String platoPrincipal;
-	private String postre;
-	private String bebida;
-	private String tipoMenu; //Vegetariano, no vegetariano, sin gluten, sin restricciones.
-	private int precio;
-	
-	public Menu () {}
-	
-	public Menu (String n, String e, String plato, String postre, String b, String t, int precio) {
-		this.setNombreMenu(n);
-		this.setEntrada(e);
-		this.setPlatoPrincipal(plato);
-		this.setPostre(postre);
-		this.setBebida(b);
-		this.setTipoMenu(t);
-		this.setPrecio(precio);
-	}
 
-	public String getEntrada() {
-		return entrada;
-	}
+    @Id 
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
 
-	public void setEntrada(String entrada) {
-		this.entrada = entrada;
-	}
+    @NotBlank(message = "El nombre del menú no puede estar vacío")
+    private String nombreMenu;
 
-	public String getPlatoPrincipal() {
-		return platoPrincipal;
-	}
+    @NotBlank(message = "La entrada no puede estar vacía")
+    private String entrada;
 
-	public void setPlatoPrincipal(String platoPrincipal) {
-		this.platoPrincipal = platoPrincipal;
-	}
+    @NotBlank(message = "El plato principal no puede estar vacío")
+    private String platoPrincipal;
 
-	public String getPostre() {
-		return postre;
-	}
+    @NotBlank(message = "El postre no puede estar vacío")
+    private String postre;
 
-	public void setPostre(String postre) {
-		this.postre = postre;
-	}
+    @NotBlank(message = "La bebida no puede estar vacía")
+    private String bebida;
 
-	public String getBebida() {
-		return bebida;
-	}
+    @NotBlank(message = "El tipo de menú no puede estar vacío")
+    private String tipoMenu; // Vegetariano, no vegetariano, sin gluten, sin restricciones.
 
-	public void setBebida(String bebida) {
-		this.bebida = bebida;
-	}
+    @NotNull(message = "El precio no puede ser nulo")
+    @Min(value = 0, message = "El precio debe ser mayor o igual a cero")
+    private int precio;
 
-	public int getPrecio() {
-		return precio;
-	}
+    public Menu() {}
 
-	public void setPrecio(int precio) {
-		this.precio = precio;
-	}
+    public Menu(String n, String e, String plato, String postre, String b, String t, int precio) {
+        this.setNombreMenu(n);
+        this.setEntrada(e);
+        this.setPlatoPrincipal(plato);
+        this.setPostre(postre);
+        this.setBebida(b);
+        this.setTipoMenu(t);
+        this.setPrecio(precio);
+    }
 
-	public int getId() {
-		return id;
-	}
+    // Getters y Setters
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getNombreMenu() {
-		return nombreMenu;
-	}
+    public String getNombreMenu() {
+        return nombreMenu;
+    }
 
-	public void setNombreMenu(String nombreMenu) {
-		this.nombreMenu = nombreMenu;
-	}
+    public void setNombreMenu(String nombreMenu) {
+        this.nombreMenu = nombreMenu;
+    }
 
-	public String getTipoMenu() {
-		return tipoMenu;
-	}
+    public String getEntrada() {
+        return entrada;
+    }
 
-	public void setTipoMenu(String tipoMenu) {
-		this.tipoMenu = tipoMenu;
-	}
-	
-	
+    public void setEntrada(String entrada) {
+        this.entrada = entrada;
+    }
+
+    public String getPlatoPrincipal() {
+        return platoPrincipal;
+    }
+
+    public void setPlatoPrincipal(String platoPrincipal) {
+        this.platoPrincipal = platoPrincipal;
+    }
+
+    public String getPostre() {
+        return postre;
+    }
+
+    public void setPostre(String postre) {
+        this.postre = postre;
+    }
+
+    public String getBebida() {
+        return bebida;
+    }
+
+    public void setBebida(String bebida) {
+        this.bebida = bebida;
+    }
+
+    public String getTipoMenu() {
+        return tipoMenu;
+    }
+
+    public void setTipoMenu(String tipoMenu) {
+        this.tipoMenu = tipoMenu;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
 }
+
