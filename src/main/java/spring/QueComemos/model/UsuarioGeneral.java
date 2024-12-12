@@ -4,6 +4,8 @@ import java.io.File;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="usuario_general")
@@ -11,12 +13,33 @@ public class UsuarioGeneral {
 	
 	@Id
 	private int dni;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String nombre;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String apellido;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String email;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String contraseña;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String preferenciasAlimentarias;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String rol;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String fotoPerfil;
 	
 	public UsuarioGeneral() {

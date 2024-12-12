@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import spring.QueComemos.model.UsuarioGeneral;
 import spring.QueComemos.services.UsuarioGeneralDAOjpa;
 import org.springframework.http.MediaType;
@@ -48,41 +49,55 @@ public class UsuarioController {
     //================================ AGREGAR  =====================================
 
     @PostMapping("/agregar")
-    public ResponseEntity<UsuarioGeneral> crearUsuario(@RequestBody UsuarioGeneral usuario) {
-        System.out.println("Creando el usuario: " + usuario.getNombre());
+    public ResponseEntity<String> crearUsuario(@Valid @RequestBody UsuarioGeneral usuario) {
+    	
+        try {
 
-        if (usuarioService.existe(usuario.getDni())) {
-            System.out.println("Ya existe en la base de datos el usuario id:" + usuario.getDni() + " - " + usuario.getNombre());
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+	        if (usuarioService.existe(usuario.getDni())) {
+	            //System.out.println("Ya existe en la base de datos el usuario id:" + usuario.getDni() + " - " + usuario.getNombre());
+	            return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe el usuario con el dni/id: "+usuario.getDni());
+	        }
+	        usuarioService.agregar(usuario);
+	        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario agregado con éxito.");
+        } catch(IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		} catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error interno del servidor: " + e.getMessage());
         }
-        usuarioService.agregar(usuario);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //================================ ACTUALIZAR  =====================================
  
         @PutMapping("/actualizar/{id}")
-        public ResponseEntity<UsuarioGeneral> actualizarUsuario(@PathVariable("id") int id, @RequestBody UsuarioGeneral unUsuario) {
-            System.out.println("Actualizando el usuario con id: " + unUsuario.getDni());
-
-            Optional<UsuarioGeneral> usuarioActual = usuarioService.obtenerPorId(id);
-
-            if (!usuarioActual.isPresent()) {
-                System.out.println("Usuario con id:" + id + ", no encontrado.");
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        public ResponseEntity<String> actualizarUsuario(@Valid @PathVariable("id") int id, @RequestBody UsuarioGeneral unUsuario) {
+            //System.out.println("Actualizando el usuario con id: " + unUsuario.getDni());
+        	
+        	try {
+	            Optional<UsuarioGeneral> usuarioActual = usuarioService.obtenerPorId(id);
+	
+	            if (!usuarioActual.isPresent()) {
+	                //System.out.println("Usuario con id:" + id + ", no encontrado.");
+	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra un usuario con el DNI ingresado.");
+	            }
+	
+	            UsuarioGeneral usuario = usuarioActual.get();
+	            usuario.setNombre(unUsuario.getNombre());
+	            usuario.setApellido(unUsuario.getApellido());
+	            usuario.setEmail(unUsuario.getEmail());
+	            usuario.setContraseña(unUsuario.getContraseña());
+	            usuario.setPreferenciasAlimentarias(unUsuario.getPreferenciasAlimentarias());
+	            usuario.setRol(unUsuario.getRol());
+	            usuario.setFotoPerfil(unUsuario.getFotoPerfil());
+	
+	            usuarioService.actualizar(usuario);
+	            return ResponseEntity.status(HttpStatus.OK).body("Usuario actualizada con éxito.");
+        	} catch(IllegalArgumentException e) {
+    			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    		} catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Error interno del servidor: " + e.getMessage());
             }
-
-            UsuarioGeneral usuario = usuarioActual.get();
-            usuario.setNombre(unUsuario.getNombre());
-            usuario.setApellido(unUsuario.getApellido());
-            usuario.setEmail(unUsuario.getEmail());
-            usuario.setContraseña(unUsuario.getContraseña());
-            usuario.setPreferenciasAlimentarias(unUsuario.getPreferenciasAlimentarias());
-            usuario.setRol(unUsuario.getRol());
-            usuario.setFotoPerfil(unUsuario.getFotoPerfil());
-
-            usuarioService.actualizar(usuario);
-            return new ResponseEntity<>(HttpStatus.OK);
         }
     
 

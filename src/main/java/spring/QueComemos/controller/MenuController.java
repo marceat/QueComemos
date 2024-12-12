@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
 import spring.QueComemos.model.Comida;
 import spring.QueComemos.services.ComidaDAOjpa;
 import spring.QueComemos.services.MenuDAOjpa;
@@ -56,40 +58,55 @@ public class MenuController {
 	//================================ AGREGAR  =====================================
 	
 	@PostMapping("/agregar")
-	public ResponseEntity crearMenu(@RequestBody Menu menu){
-		System.out.println("Creando la menu: "+menu.getNombreMenu());
+	public ResponseEntity<String> crearMenu(@Valid @RequestBody Menu menu){
+		//System.out.println("Creando la menu: "+menu.getNombreMenu());
 		
-		if (menuService.existe(menu.getId())) {
-			System.out.println("Ya existe en la base de datos el menu:"+menu.getId()+" - "+menu.getEntrada()+" - $"+
-					menu.getPlatoPrincipal()+" - "+menu.getPostre()+" - "+menu.getTipoMenu()+" - "+menu.getPrecio());
-			return new ResponseEntity(HttpStatus.CONFLICT);
-		}
-		menuService.agregar(menu);
-		return new ResponseEntity<Comida>(HttpStatus.OK);
+		try {
+		
+			if (menuService.existe(menu.getId())) {
+				//System.out.println("Ya existe en la base de datos el menu:"+menu.getId()+" - "+menu.getEntrada()+" - $"+
+				//		menu.getPlatoPrincipal()+" - "+menu.getPostre()+" - "+menu.getTipoMenu()+" - "+menu.getPrecio());
+				 return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe el menú con el id: "+menu.getId());
+			}
+			menuService.agregar(menu);
+			return ResponseEntity.status(HttpStatus.CREATED).body("mENU agregado con éxito.");
+		} catch(IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		} catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error interno del servidor: " + e.getMessage());
+        }
 	}
 	
 	//================================ ACTUALIZAR  =====================================
 	@PutMapping("/actualizar/{id}")
-	public ResponseEntity<Menu> actualizarMenu(@PathVariable("id") int id, @RequestBody Menu menu){
-		System.out.println("Actualizando el menu con id: "+menu.getId());
+	public ResponseEntity<String> actualizarMenu(@PathVariable("id") int id, @RequestBody Menu menu){
+		//System.out.println("Actualizando el menu con id: "+menu.getId());
 		
-		Optional<Menu> menuActual = menuService.obtenerPorId(id);
-		
-		if(menuActual == null) {
-			System.out.println("Comida con id:"+id+", no encontrada.");
-			return new ResponseEntity<Menu>(HttpStatus.NOT_FOUND);
-		}
-		
-		menuActual.get().setNombreMenu(menu.getNombreMenu());
-		menuActual.get().setPlatoPrincipal(menu.getPlatoPrincipal());
-		menuActual.get().setEntrada(menu.getEntrada());
-		menuActual.get().setBebida(menu.getBebida());
-		menuActual.get().setPostre(menu.getPostre());
-		menuActual.get().setPrecio(menu.getPrecio());
-		menuActual.get().setTipoMenu(menu.getTipoMenu());
-		
-		menuService.actualizar(menu);
-		return new ResponseEntity<Menu>(HttpStatus.OK);
+		try {
+			Optional<Menu> menuActual = menuService.obtenerPorId(id);
+			
+			if(menuActual == null) {
+				System.out.println("Comida con id:"+id+", no encontrada.");
+				 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra un menu con el id ingresado.");
+			}
+			
+			menuActual.get().setNombreMenu(menu.getNombreMenu());
+			menuActual.get().setPlatoPrincipal(menu.getPlatoPrincipal());
+			menuActual.get().setEntrada(menu.getEntrada());
+			menuActual.get().setBebida(menu.getBebida());
+			menuActual.get().setPostre(menu.getPostre());
+			menuActual.get().setPrecio(menu.getPrecio());
+			menuActual.get().setTipoMenu(menu.getTipoMenu());
+			
+			menuService.actualizar(menu);
+			return ResponseEntity.status(HttpStatus.OK).body("Meu actualizado con éxito.");
+		} catch(IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		} catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error interno del servidor: " + e.getMessage());
+        }
 	}
 	
 	//================================ ELIMINAR   =====================================

@@ -1,7 +1,17 @@
 package spring.QueComemos.model;
 import org.springframework.stereotype.Component;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import org.springframework.validation.*;
+import jakarta.validation.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name="comida")
@@ -10,9 +20,16 @@ public class Comida {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	int id;
-	String nombre;
-	int precio;
-	int stock;
+	
+	@NotBlank(message="El campo nombre no puede estar vacio.")
+	@NotNull(message="Falta el campo precio.")
+	private String nombre;
+	
+	@NotNull(message="Falta el campo precio.")
+	private int precio;
+	
+	@NotNull(message="Falta el campo stock.")
+	private int stock;
 	
 	public Comida () {}
 	

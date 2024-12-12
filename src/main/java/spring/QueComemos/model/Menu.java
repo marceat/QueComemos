@@ -2,6 +2,8 @@ package spring.QueComemos.model;
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="MENU")
@@ -10,12 +12,32 @@ public class Menu {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String nombreMenu;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String entrada;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String platoPrincipal;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String postre;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String bebida;
+	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
 	private String tipoMenu; //Vegetariano, no vegetariano, sin gluten, sin restricciones.
+	
+	@NotNull(message = "El campo no puede estar vacío.")
 	private int precio;
 	
 	public Menu () {}

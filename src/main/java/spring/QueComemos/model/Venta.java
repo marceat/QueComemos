@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="VENTA")
@@ -20,17 +22,26 @@ public class Venta {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	int id;
 	
+	@NotNull
 	@ManyToOne(cascade={CascadeType.MERGE})
 	UsuarioGeneral usuario;
 	
+	@NotNull
 	@OneToMany(cascade={CascadeType.MERGE})
 	List<Menu> menues;
 	
+	@NotNull
 	@OneToMany(cascade={CascadeType.MERGE})
 	List<Comida> comidas;
 	
+	@NotNull
 	Date fecha;
+	
+	@NotNull
 	Double precioTotal;
+	
+	@NotNull
+	@NotBlank
 	String qr;
 	
     public 	Venta() {

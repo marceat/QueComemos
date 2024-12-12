@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 
 @Entity
@@ -30,24 +31,34 @@ public class CartaSemanal {
 	//@ManyToMany(cascade={CascadeType.MERGE}, fetch = FetchType.EAGER)
 	//private List<Menu> viernes;
 	
+	@NotNull
 	int id_menu_lunes_1;
 	
+	@NotNull
 	int id_menu_lunes_2;
 	
+	@NotNull
 	int id_menu_martes_1;
 	
+	@NotNull
 	int id_menu_martes_2;
 	
+	@NotNull
 	int id_menu_miercoles_1;
 	
+	@NotNull
 	int id_menu_miercoles_2;
 	
+	@NotNull
 	int id_menu_jueves_1;
 	
+	@NotNull
 	int id_menu_jueves_2;
 	
+	@NotNull
 	int id_menu_viernes_1;
 	
+	@NotNull
 	int id_menu_viernes_2;
 	
 	

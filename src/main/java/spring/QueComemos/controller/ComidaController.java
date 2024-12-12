@@ -1,14 +1,19 @@
 package spring.QueComemos.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +21,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
 import spring.QueComemos.model.*;
 
 import spring.QueComemos.services.ComidaDAOjpa;
@@ -44,6 +51,7 @@ public class ComidaController {
 	
 	@GetMapping
 	public ResponseEntity<List<Comida>> listarComidas(){
+		
 		List<Comida> comidasObtenidas = (ArrayList<Comida>) comidaService.listar();
 		
 		if (comidasObtenidas.isEmpty()) {
@@ -55,62 +63,79 @@ public class ComidaController {
 	
 	//================================ AGREGAR  =====================================
 	
-	@PostMapping("/agregar")
-	public ResponseEntity crearComida(@RequestBody Comida comida){
-		System.out.println("Creando la comida: "+comida.getNombre());
-		
-		if (comidaService.existe(comida.getId())) {
-			System.out.println("Ya existe en la base de datos la comida id:"+comida.getId()+" - "+comida.getNombre()+" - $"+
-			comida.getPrecio()+" - "+comida.getStock());
-			return new ResponseEntity(HttpStatus.CONFLICT);
-		}
-		comidaService.agregar(comida);
-		return new ResponseEntity<Comida>(HttpStatus.OK);
+	@PostMapping("/agregar") //ResponseEntity<Comida>
+	public ResponseEntity<String> crearComida(@Valid @RequestBody Comida comida){
+		try {
+			if (comidaService.existe(comida.getId())) {
+				System.out.println("Ya existe en la base de datos la comida id:"+comida.getId()+" - "+comida.getNombre()+" - $"+
+				comida.getPrecio()+" - "+comida.getStock());
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe esa comida con ese id");
+			}
+			comidaService.agregar(comida);
+			return ResponseEntity.status(HttpStatus.CREATED).body("Comida agregada con éxito.");
+		} catch(IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		} catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error interno del servidor: " + e.getMessage());
+        }
+		//return new ResponseEntity<Comida>(HttpStatus.CREATED);
 	}
 	
 	//================================ ACTUALIZAR  =====================================
 	@PutMapping("/actualizar/{id}")
-	public ResponseEntity<Comida> actualizarComida(@PathVariable("id") int id, @RequestBody Comida unaComida){
-		System.out.println("Actualizando la comida con id: "+unaComida.getId());
+	public ResponseEntity<String> actualizarComida(@Valid @PathVariable("id") int id, @RequestBody Comida unaComida){
 		
-		Optional<Comida> comidaActual = comidaService.obtenerPorId(id);
+		try {
 		
-		if(comidaActual == null) {
-			System.out.println("Comida con id:"+id+", no encontrada.");
-			return new ResponseEntity<Comida>(HttpStatus.NOT_FOUND);
-		}
-		
-		comidaActual.get().setNombre(unaComida.getNombre());
-		comidaActual.get().setPrecio(unaComida.getPrecio());
-		comidaActual.get().setStock(unaComida.getStock());
-		
-		comidaService.actualizar(comidaActual.get());
-		return new ResponseEntity<Comida>(HttpStatus.OK);
+			Optional<Comida> comidaActual = comidaService.obtenerPorId(id);
+			
+			if(comidaActual == null) {
+				System.out.println("Comida con id:"+id+", no encontrada.");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra una comida con el id ingresado.");
+			}
+			
+			comidaActual.get().setNombre(unaComida.getNombre());
+			comidaActual.get().setPrecio(unaComida.getPrecio());
+			comidaActual.get().setStock(unaComida.getStock());
+			
+			comidaService.actualizar(comidaActual.get());
+			return ResponseEntity.status(HttpStatus.OK).body("Comida actualizada con éxito.");
+		} catch(IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		} catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error interno del servidor: " + e.getMessage());
+        }
 	}
 	
 	//================================ ELIMINAR   =====================================
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Comida> eliminarComida(@PathVariable("id") int id){
-		System.out.println("Obteniendo y eliminando la comida con id: "+id);
+	public ResponseEntity<String> eliminarComida(@PathVariable("id") int id){
+		
+		try {
 			
-		Optional<Comida> comidaObtenida = comidaService.obtenerPorId(id);
-			
-		if(comidaObtenida == null) {
-			System.out.println("No es posible eliminar. Comida con id:"+id+", no encontrada.");
-			return new ResponseEntity<Comida>(HttpStatus.NOT_FOUND);
+			Optional<Comida> comidaObtenida = comidaService.obtenerPorId(id);
+				
+			if(comidaObtenida == null) {
+				System.out.println("No es posible eliminar. Comida con id:"+id+", no encontrada.");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra una comida con el id ingresado.");
+			}
+				
+			comidaService.eliminar(comidaObtenida.get());
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Comida con id "+id+" borrada con éxito.");
+		} catch(IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
-			
-		comidaService.eliminar(comidaObtenida.get());
-		return new ResponseEntity<Comida>(HttpStatus.NO_CONTENT);
 	}
 		
 	 //================================ ELIMINAR TODAS  =====================================
 	@DeleteMapping
-	public ResponseEntity<Comida> eliminarTodas(){
+	public ResponseEntity<String> eliminarTodas(){
 		System.out.println("Eliminando todas las comidas.");
 		
 		comidaService.eliminarTodo();
-		return new ResponseEntity<Comida>(HttpStatus.NO_CONTENT);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Se han eliminado todas las comidas.");
 	}
 	
 	
