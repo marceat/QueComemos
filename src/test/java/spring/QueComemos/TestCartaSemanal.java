@@ -52,20 +52,20 @@ class TestCartaSemanal {
 	
 	@BeforeEach
 	void setUp() {
-		menuLunes1 = new Menu("Menú 1","papas fritas", "Hamburguesa de carne", "Banana", "Gaseosa", "NO VEGETARIANO", 3500);
-		menuLunes2 = new Menu("Menú 2","papas fritas", "Hamburguesa de soja", "Banana", "Gaseosa", "VEGETARIANO", 3500);
+		menuLunes1 = new Menu("Menú 1","papas fritas", "Hamburguesa de carne", "Banana", "Gaseosa", "NO VEGETARIANO", 3500, "menu1.png");
+		menuLunes2 = new Menu("Menú 2","papas fritas", "Hamburguesa de soja", "Banana", "Gaseosa", "VEGETARIANO", 3500, "menu1.png");
 		
-		menuMartes1 = new Menu("Menú 1","Empanada de pollo", "Porcion de pizza", "Naranja", "Gaseosa", "NO VEGETARIANO", 3500);
-		menuMartes2 = new Menu("Menú 2","Empanada de verduras", "Pancho", "Naranja", "Gaseosa", "VEGETARIANO", 3500);
+		menuMartes1 = new Menu("Menú 1","Empanada de pollo", "Porcion de pizza", "Naranja", "Gaseosa", "NO VEGETARIANO", 3500, "menu1.png");
+		menuMartes2 = new Menu("Menú 2","Empanada de verduras", "Pancho", "Naranja", "Gaseosa", "VEGETARIANO", 3500, "menu1.png");
 		
-		menuMiercoles1 = new Menu("Menú 1","Wrap de pollo", "Tarta de JyQ", "Manzana", "Gaseosa", "NO VEGETARIANO", 3500);
-		menuMiercoles2 = new Menu("Menú 2","Wrap de verduras", "Tarta de espinaca", "Manzana", "Gaseosa", "VEGETARIANO", 3500);
+		menuMiercoles1 = new Menu("Menú 1","Wrap de pollo", "Tarta de JyQ", "Manzana", "Gaseosa", "NO VEGETARIANO", 3500, "menu1.png");
+		menuMiercoles2 = new Menu("Menú 2","Wrap de verduras", "Tarta de espinaca", "Manzana", "Gaseosa", "VEGETARIANO", 3500, "menu1.png");
 		
-		menuJueves1 = new Menu("Menú 1","Empanada de carne", "Risoto con pollo", "Manzana", "Gaseosa", "NO VEGETARIANO", 3500);
-		menuJueves2 = new Menu("Menú 2","Empanada de JyQ", "Fideos con bolognesa", "Manzana", "Gaseosa", "VEGETARIANO", 3500);
+		menuJueves1 = new Menu("Menú 1","Empanada de carne", "Risoto con pollo", "Manzana", "Gaseosa", "NO VEGETARIANO", 3500, "menu1.png");
+		menuJueves2 = new Menu("Menú 2","Empanada de JyQ", "Fideos con bolognesa", "Manzana", "Gaseosa", "VEGETARIANO", 3500, "menu1.png");
 		
-		menuViernes1 = new Menu("Menú 4","batatas fritas", "Pastel de carne", "Pera", "Agua", "NO VEGETARIANO", 3500);
-		menuViernes2 = new Menu("Menú 4","batatas fritas", "Tortilla española", "Pera", "Agua", "VEGETARIANO", 3500);
+		menuViernes1 = new Menu("Menú 4","batatas fritas", "Pastel de carne", "Pera", "Agua", "NO VEGETARIANO", 3500, "menu1.png");
+		menuViernes2 = new Menu("Menú 4","batatas fritas", "Tortilla española", "Pera", "Agua", "VEGETARIANO", 3500, "menu1.png");
 		
 		funcionesMenu.agregar(menuLunes1);
 		funcionesMenu.agregar(menuLunes2);

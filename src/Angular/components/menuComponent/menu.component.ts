@@ -1,29 +1,32 @@
 import { Component } from '@angular/core';
 import { Menu } from '../../model/menu';
-import { MenuItemComponent } from '../menuItem/menuItem/menuItem.component';
+import { CardMenu } from '../card/card.component';
 import axios from 'axios';
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-menu',
-  imports: [ MenuItemComponent ],
+  imports: [ CardMenu ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
 
 export class MenuComponent {
-    listaMenues: any [] = [
-      {'id':1,'nombreMenu':'Menú Vegetariano', 'entrada':'Empanada vegana','platoPrincipal':'Ensalada césar','bebida':'pepsi','tipoMenu': 'No vegetariano','postre':'manzana','precio':4500},
-      {'id':1,'nombreMenu':'Menú Vegetariano', 'entrada':'Empanada vegana','platoPrincipal':'Ensalada césar','bebida':'pepsi','tipoMenu': 'No vegetariano','postre':'manzana','precio':4500},
-    ];
+    listaMenues: any [] = [];
+    // [
+      //{'id':1,'nombreMenu':'Menú Vegetariano', 'entrada':'Empanada vegana','platoPrincipal':'Ensalada césar','bebida':'pepsi','tipoMenu': 'No vegetariano','postre':'manzana','precio':4500},
+      //{'id':1,'nombreMenu':'Menú Vegetariano', 'entrada':'Empanada vegana','platoPrincipal':'Ensalada césar','bebida':'pepsi','tipoMenu': 'No vegetariano','postre':'manzana','precio':4500},
+    //];
 
-    async getMenus(){
-      try {
-        const response = await axios.get('http://localhost:8086/api/menu');
+    constructor(private menuService: MenuService) {
+
+    }
+
+    ngOnInit() {
+      this.menuService.getMenues().then(response => {
         this.listaMenues = response.data;
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
+        console.log(this.listaMenues);
+      });
     }
 }
 

@@ -32,10 +32,10 @@ class TestMenu {
 	
 	@BeforeEach
 	void setUp() {
-		menu1 = new Menu("Menú 1","papas fritas", "Hamburguesa con queso", "Banana", "Gaseosa", "NO VEGETARIANO", 3500);
-		menu2 = new Menu("Menú 2","papas fritas", "Pancho", "Naranja", "Gaseosa", "NO VEGETARIANO", 3500);
-		menu3 = new Menu("Menú 3","Wrap de vegetales", "Tarta de espinaca", "Manzana", "Gaseosa", "VEGETARIANO", 3500);
-		menu4 = new Menu("Menú 4","batatas fritas", "Tortilla española", "Pera", "Agua", "VEGETARIANO", 3500);
+		Menu menu1 = new Menu("Menú 1","papas fritas", "Hamburguesa con queso", "Banana", "Gaseosa", "NO VEGETARIANO", 3500, "menu1.png");
+		Menu menu2 = new Menu("Menú 2","papas fritas", "Pancho", "Naranja", "Gaseosa", "NO VEGETARIANO", 3500, "menu2.png");
+		Menu menu3 = new Menu("Menú 3","Wrap de vegetales", "Tarta de espinaca", "Manzana", "Gaseosa", "VEGETARIANO", 3500, "menu3.png");
+		Menu menu4 = new Menu("Menú 4","batatas fritas", "Tortilla española", "Pera", "Agua", "VEGETARIANO", 3500, "menu4.png");
 		
 	}
 

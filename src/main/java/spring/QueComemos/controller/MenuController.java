@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import spring.QueComemos.services.ComidaDAOjpa;
 import spring.QueComemos.services.MenuDAOjpa;
 import spring.QueComemos.model.Menu;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping(value="/api/menu",produces = {MediaType.APPLICATION_JSON_VALUE})
 public class MenuController {
@@ -98,6 +100,7 @@ public class MenuController {
 			menuActual.get().setPostre(menu.getPostre());
 			menuActual.get().setPrecio(menu.getPrecio());
 			menuActual.get().setTipoMenu(menu.getTipoMenu());
+			menuActual.get().setImage(menu.getImage());
 			
 			menuService.actualizar(menu);
 			return ResponseEntity.status(HttpStatus.OK).body("Meu actualizado con éxito.");

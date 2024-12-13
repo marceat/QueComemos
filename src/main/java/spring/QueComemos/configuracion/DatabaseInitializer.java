@@ -53,10 +53,10 @@ public class DatabaseInitializer {
     		funcionesSugerencia.agregar(sugerencia2);
     		
     		//===================================== CREAMOS MENUS =====================================
-    		Menu menu1 = new Menu("Menú 1","papas fritas", "Hamburguesa con queso", "Banana", "Gaseosa", "NO VEGETARIANO", 3500);
-    		Menu menu2 = new Menu("Menú 2","papas fritas", "Pancho", "Naranja", "Gaseosa", "NO VEGETARIANO", 3500);
-    		Menu menu3 = new Menu("Menú 3","Wrap de vegetales", "Tarta de espinaca", "Manzana", "Gaseosa", "VEGETARIANO", 3500);
-    		Menu menu4 = new Menu("Menú 4","batatas fritas", "Tortilla española", "Pera", "Agua", "VEGETARIANO", 3500);
+    		Menu menu1 = new Menu("Menú 1","papas fritas", "Hamburguesa con queso", "Banana", "Gaseosa", "NO VEGETARIANO", 3500, "https://th.bing.com/th/id/R.58772c589de703e801fa6f5d20139d8f?rik=XSCvP8hPprJ9PQ&pid=ImgRaw&r=0");
+    		Menu menu2 = new Menu("Menú 2","papas fritas", "Pancho", "Naranja", "Gaseosa", "NO VEGETARIANO", 3500, "https://th.bing.com/th/id/R.dd87782966f36c54968f9bfc1f54493a?rik=imVXXrXvgjlzeQ&pid=ImgRaw&r=0");
+    		Menu menu3 = new Menu("Menú 3","Wrap de vegetales", "Tarta de espinaca", "Manzana", "Gaseosa", "VEGETARIANO", 3500, "https://deliciouslittlebites.com/wp-content/uploads/2017/12/Greek-Veggie-Wrap-Recipe-Image-1-3.jpg");
+    		Menu menu4 = new Menu("Menú 4","batatas fritas", "Tortilla española", "Pera", "Agua", "VEGETARIANO", 3500, "https://th.bing.com/th/id/OIP.H8cs0Kb-PvtvoiBheIzVgwHaG9?rs=1&pid=ImgDetMain");
     		
     		funcionesMenu.agregar(menu1);
     		funcionesMenu.agregar(menu2);

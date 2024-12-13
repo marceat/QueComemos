@@ -1,0 +1,22 @@
+<mat-card class="card" appearance="outlined">
+  <mat-card-header>
+    <!-- <div mat-card-avatar class="example-header-image"></div> -->
+    <mat-card-title>
+      <div class="card-item-icon"><mat-icon>restaurant</mat-icon>  {{nombreMenu}}</div>
+    </mat-card-title>
+    <mat-card-subtitle>{{tipoMenu}}</mat-card-subtitle>
+  </mat-card-header>
+  <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+  <img mat-card-image [ngSrc]="image" alt="{{image}}" width="300" height="300">
+  <mat-card-content>
+    <div class="card-item"><mat-icon>lunch_dining</mat-icon> {{platoPrincipal}}</div>
+    <div class="card-item"> <mat-icon>soup_kitchen</mat-icon>  {{entrada}}</div>
+    <div class="card-item"> <mat-icon>icecream</mat-icon>  {{postre}} </div>
+    <div class="card-item"> <mat-icon>wine_bar</mat-icon>  {{bebida}} </div>
+    <div class="card-item"> <mat-icon>payments</mat-icon>  $ {{precio}} </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions>
+</mat-card>

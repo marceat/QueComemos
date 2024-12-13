@@ -93,19 +93,21 @@
     <img src="buffet.jpg" alt="Logo de la Universidad" class="logo">
         <h1>Buffet Universitario - Menú Semanal</h1>
         
-        <div class="day">
+        <div class="card-menu">
             <h2>Viernes</h2>
             @for (menuActual of listaMenues; track menuActual.id) {
-            <div class="menu">
+            <div class="card-content">
                 <h3></h3>
-                <app-menuItem
+                <card-menu
                     [nombreMenu]="menuActual.nombreMenu"
                     [entrada]="menuActual.entrada"
                     [platoPrincipal]="menuActual.platoPrincipal"
                     [postre]="menuActual.postre"
                     [bebida]="menuActual.bebida"
-                    [precio]=menuActual.precio>
-                </app-menuItem>
+                    [tipoMenu]="menuActual.tipoMenu"
+                    [precio]=menuActual.precio
+                    [image]="menuActual.image">
+                </card-menu>
             </div>
             }
         </div>

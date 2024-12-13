@@ -40,9 +40,13 @@ public class Menu {
 	@NotNull(message = "El campo no puede estar vacío.")
 	private int precio;
 	
+	@NotNull(message = "El campo no puede estar vacío.")
+	@NotBlank(message = "Falta el campo.")
+	private String image; //Vegetariano, no vegetariano, sin gluten, sin restricciones.
+	
 	public Menu () {}
 	
-	public Menu (String n, String e, String plato, String postre, String b, String t, int precio) {
+	public Menu (String n, String e, String plato, String postre, String b, String t, int precio, String image) {
 		this.setNombreMenu(n);
 		this.setEntrada(e);
 		this.setPlatoPrincipal(plato);
@@ -50,6 +54,15 @@ public class Menu {
 		this.setBebida(b);
 		this.setTipoMenu(t);
 		this.setPrecio(precio);
+		this.setImage(image);
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public String getEntrada() {
