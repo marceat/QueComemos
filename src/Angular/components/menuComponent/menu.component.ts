@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Menu } from '../../model/menu';
 import { CardMenu } from '../card/card.component';
 import axios from 'axios';
-import { MenuService } from '../../services/menu.service';
+import { MenuService } from '../../services/menu.service'
 
 @Component({
   selector: 'app-menu',
@@ -13,10 +13,6 @@ import { MenuService } from '../../services/menu.service';
 
 export class MenuComponent {
     listaMenues: any [] = [];
-    // [
-      //{'id':1,'nombreMenu':'Menú Vegetariano', 'entrada':'Empanada vegana','platoPrincipal':'Ensalada césar','bebida':'pepsi','tipoMenu': 'No vegetariano','postre':'manzana','precio':4500},
-      //{'id':1,'nombreMenu':'Menú Vegetariano', 'entrada':'Empanada vegana','platoPrincipal':'Ensalada césar','bebida':'pepsi','tipoMenu': 'No vegetariano','postre':'manzana','precio':4500},
-    //];
 
     constructor(private menuService: MenuService) {
 
