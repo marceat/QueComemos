@@ -16,7 +16,7 @@
             display: block;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: auto;
             background: white;
             padding: 20px;
@@ -90,26 +90,28 @@
 </head>
 <body>
     <div class="container">
-    <img src="buffet.jpg" alt="Logo de la Universidad" class="logo">
-        <h1>Buffet Universitario - Menú Semanal</h1>
-        
-        <div class="card-menu">
-            <h2>Viernes</h2>
-            @for (menuActual of listaMenues; track menuActual.id) {
-            <div class="card-content">
-                <h3></h3>
-                <card-menu
-                    [nombreMenu]="menuActual.nombreMenu"
-                    [entrada]="menuActual.entrada"
-                    [platoPrincipal]="menuActual.platoPrincipal"
-                    [postre]="menuActual.postre"
-                    [bebida]="menuActual.bebida"
-                    [tipoMenu]="menuActual.tipoMenu"
-                    [precio]=menuActual.precio
-                    [image]="menuActual.image">
-                </card-menu>
+        <div class="card-list">
+        <img src="buffet.jpg" alt="Logo de la Universidad" class="logo">
+            <h1>Buffet Universitario - Menú Semanal</h1>
+            
+            <div class="card-menu">
+                <h2>Viernes</h2>
+                @for (menuActual of listaMenues; track menuActual.id) {
+                <div class="card-content">
+                    <h3></h3>
+                    <card-menu
+                        [nombreMenu]="menuActual.nombreMenu"
+                        [entrada]="menuActual.entrada"
+                        [platoPrincipal]="menuActual.platoPrincipal"
+                        [postre]="menuActual.postre"
+                        [bebida]="menuActual.bebida"
+                        [tipoMenu]="menuActual.tipoMenu"
+                        [precio]=menuActual.precio
+                        [image]="menuActual.image">
+                    </card-menu>
+                </div>
+                }
             </div>
-            }
         </div>
         
         <!-- Repetir estructura similar para Martes, Miércoles, Jueves y Viernes -->
