@@ -1,11 +1,10 @@
 package spring.QueComemos.controller;
 
-
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import jakarta.validation.Valid;
 import spring.QueComemos.model.UsuarioGeneral;
 import spring.QueComemos.services.UsuarioGeneralDAOjpa;
@@ -21,24 +20,7 @@ public class UsuarioController {
     @Autowired
     UsuarioGeneralDAOjpa usuarioService;
 
-    @PostMapping(value = "/agregar", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<String> crearUsuario(@Valid @RequestPart("usuario") UsuarioGeneral usuario, @RequestPart("fotoPerfil") MultipartFile fotoPerfil) {
-        try {
-            if (usuarioService.existe(usuario.getDni())) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("{\"message\":\"Ya existe el usuario con el dni/id: " + usuario.getDni() + "\"}");
-            }
-            String fotoPerfilPath = "/ruta/donde/guardar/" + fotoPerfil.getOriginalFilename();
-            //guardar el archivo en el sistema de archivos o en un almacenamiento externo
-            usuario.setFotoPerfil(fotoPerfilPath);
-            usuarioService.agregar(usuario);
-            return ResponseEntity.status(HttpStatus.CREATED).body("{\"message\":\"Usuario agregado con éxito.\"}");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"" + e.getMessage() + "\"}");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\":\"Error interno del servidor: " + e.getMessage() + "\"}");
-        }
-    }
+    //================================ OBTENER =====================================
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioGeneral> obtenerUsuarioPorId(@PathVariable("id") int id) {
@@ -51,6 +33,8 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarioObtenido.get(), HttpStatus.OK);
     }
 
+    //================================ LISTAR =====================================
+
     @GetMapping
     public ResponseEntity<List<UsuarioGeneral>> listarUsuarios() {
         List<UsuarioGeneral> usuariosObtenidos = usuarioService.listar();
@@ -61,6 +45,26 @@ public class UsuarioController {
         }
         return new ResponseEntity<>(usuariosObtenidos, HttpStatus.OK);
     }
+
+    //================================ AGREGAR =====================================
+
+    @PostMapping("/agregar")
+    public ResponseEntity<String> crearUsuario(@Valid @RequestBody UsuarioGeneral usuario) {
+        try {
+            if (usuarioService.existe(usuario.getDni())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe el usuario con el dni/id: "+usuario.getDni());
+            }
+            usuarioService.agregar(usuario);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario agregado con éxito.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error interno del servidor: " + e.getMessage());
+        }
+    }
+
+    //================================ ACTUALIZAR =====================================
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<String> actualizarUsuario(@Valid @PathVariable("id") int id, @RequestBody UsuarioGeneral unUsuario) {
@@ -82,13 +86,15 @@ public class UsuarioController {
 
             usuarioService.actualizar(usuario);
             return ResponseEntity.status(HttpStatus.OK).body("Usuario actualizada con éxito.");
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error interno del servidor: " + e.getMessage());
         }
     }
+
+    //================================ ELIMINAR =====================================
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UsuarioGeneral> eliminarUsuario(@PathVariable("id") int id) {
@@ -105,6 +111,8 @@ public class UsuarioController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    //================================ ELIMINAR TODOS =====================================
+
     @DeleteMapping
     public ResponseEntity<UsuarioGeneral> eliminarTodos() {
         System.out.println("Eliminando todos los usuarios.");
@@ -113,4 +121,3 @@ public class UsuarioController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-
