@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [HttpClientModule, FormsModule] 
+  standalone: true,
+  imports: [FormsModule]
 })
 export class LoginComponent {
   username: string = '';
@@ -17,9 +17,19 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   onSubmit() {
-    this.http.post('/api/login', { username: this.username, password: this.password }).subscribe((response: any) => {
-      localStorage.setItem('token', response.token);
-      this.router.navigate(['/home']);
-    });
+    const credentials = { username: this.username, password: this.password };
+    this.http.post('/api/login', credentials).subscribe(
+      (response: any) => {
+        alert("Inicio de sesión exitoso");
+        this.router.navigate(['/home']);
+      },
+      error => {
+        if (error.error && error.error.message) {
+          alert("Error en el inicio de sesión: " + error.error.message);
+        } else {
+          alert("Error en el inicio de sesión: " + error.message);
+        }
+      }
+    );
   }
 }

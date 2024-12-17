@@ -1,15 +1,12 @@
 package spring.QueComemos.dao;
-import java.util.List;
 
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import spring.QueComemos.model.UsuarioGeneral;
 
-public interface UsuarioGeneralDAO extends DaoGenerico<UsuarioGeneral> {
-	
-	
-	boolean iniciarSesion(String dni, int contraseña) ;
-	boolean cerrarSesion() ;
-	
-	List<UsuarioGeneral> listarUsuariosComunes() ;
-	List<UsuarioGeneral> listarUsuariosResponsablesDeTurno();
-	
+@Repository
+public interface UsuarioGeneralDAO extends JpaRepository<UsuarioGeneral, Integer> {
+    Optional<UsuarioGeneral> findByDni(int dni);
+    Optional<UsuarioGeneral> findByEmail(String email); 
 }

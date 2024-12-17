@@ -1,5 +1,7 @@
 package spring.QueComemos;
 
+
+import java.util.Optional; 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,46 +19,42 @@ import spring.QueComemos.services.UsuarioGeneralDAOjpa;
 @ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-
 public class TestUsuarioGeneral {
 
-	@Autowired
-	private UsuarioGeneralDAOjpa funcionesUsuario;
-	
-	
-	UsuarioGeneral usuario1;
-	UsuarioGeneral usuario2, usuario3;
-	
-	
-	
-	@BeforeEach
-	void setUp() {
-		usuario1= new UsuarioGeneral(3122323,"Leonardo","Marin","LeoMar@gmail.com","21234","Vegano","Usuario","sin_foto");
-		usuario2=new UsuarioGeneral(46543123,"Luz","Martinez","Luz123@gmail.com","12345","Vegetariano","Usuario","sin_foto");
-		usuario3=new UsuarioGeneral(46543123,"Laura","Venitez","Lau123@gmail.com","202060","Sin Restricciones","Usuario","sin_foto");
-	
-	}
-		@Test
-		void crearUsuario() {
-			Assertions.assertEquals(true, funcionesUsuario.agregar(usuario1));
-		}
+    @Autowired
+    private UsuarioGeneralDAOjpa funcionesUsuario;
 
-		@Test
-		void actualizarUsuario() {
-			funcionesUsuario.agregar(usuario2);
-			usuario2.setNombre("Lucrecia");
-			
-			Assertions.assertEquals(true, funcionesUsuario.actualizar(usuario2));
-		}
-		
-		@Test
-		void eliminarUsuario() {
-			funcionesUsuario.agregar(usuario3);
-			Assertions.assertEquals(true, funcionesUsuario.eliminar(usuario3));
-		}
-		
-	
-	
-	
-	
+    private UsuarioGeneral usuario1;
+    private UsuarioGeneral usuario2;
+    private UsuarioGeneral usuario3;
+
+    @BeforeEach
+    void setUp() {
+        usuario1 = new UsuarioGeneral(3122323, "Leonardo", "Marin", "LeoMar@gmail.com", "21234", "Vegano", "Usuario", "sin_foto");
+        usuario2 = new UsuarioGeneral(46543123, "Luz", "Martinez", "Luz123@gmail.com", "12345", "Vegetariano", "Usuario", "sin_foto");
+        usuario3 = new UsuarioGeneral(46543124, "Laura", "Venitez", "Lau123@gmail.com", "202060", "Sin Restricciones", "Usuario", "sin_foto");
+    }
+
+    @Test
+    void crearUsuario() {
+        UsuarioGeneral savedUsuario = funcionesUsuario.agregar(usuario1);
+        Assertions.assertNotNull(savedUsuario);
+        Assertions.assertEquals(usuario1.getDni(), savedUsuario.getDni());
+    }
+
+    @Test
+    void actualizarUsuario() {
+        UsuarioGeneral savedUsuario = funcionesUsuario.agregar(usuario2);
+        savedUsuario.setNombre("Lucrecia");
+        UsuarioGeneral updatedUsuario = funcionesUsuario.actualizar(savedUsuario);
+        Assertions.assertEquals("Lucrecia", updatedUsuario.getNombre());
+    }
+
+    @Test
+    void eliminarUsuario() {
+        funcionesUsuario.agregar(usuario3);
+        funcionesUsuario.eliminar(usuario3);
+        Optional<UsuarioGeneral> deletedUsuario = funcionesUsuario.obtenerPorId(usuario3.getDni());
+        Assertions.assertTrue(deletedUsuario.isEmpty());
+    }
 }
