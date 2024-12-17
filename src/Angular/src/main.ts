@@ -6,6 +6,7 @@ import { provideRouter, withRouterConfig } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 if (environment.production) {
   enableProdMode();
@@ -13,7 +14,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(FormsModule),
+    importProvidersFrom(FormsModule,RouterModule),
     provideRouter([
       { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'login', loadComponent: () => import('../components/login/login.component').then(m => m.LoginComponent) },
