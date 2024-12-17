@@ -1,20 +1,25 @@
 package spring.QueComemos.controller;
 
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import jakarta.validation.Valid;
 import spring.QueComemos.model.UsuarioGeneral;
 import spring.QueComemos.services.UsuarioGeneralDAOjpa;
 import org.springframework.http.MediaType;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value="/api/usuario", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/api/usuario", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class UsuarioController {
 
     @Autowired
@@ -48,19 +53,35 @@ public class UsuarioController {
 
     //================================ AGREGAR =====================================
 
-    @PostMapping("/agregar")
-    public ResponseEntity<String> crearUsuario(@Valid @RequestBody UsuarioGeneral usuario) {
+    @PostMapping(value = "/agregar", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<String> crearUsuario(@Valid @RequestPart("usuario") UsuarioGeneral usuario, @RequestPart("fotoPerfil") MultipartFile fotoPerfil) {
         try {
             if (usuarioService.existe(usuario.getDni())) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe el usuario con el dni/id: "+usuario.getDni());
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("{\"message\":\"Ya existe el usuario con el dni/id: " + usuario.getDni() + "\"}");
             }
+
+            // Guardar la imagen en el directorio `resources/images`
+            String uploadsDir = "src/main/resources/images/";
+            String fotoPerfilPath = uploadsDir + fotoPerfil.getOriginalFilename();
+            File dir = new File(uploadsDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            Path path = Paths.get(fotoPerfilPath);
+            Files.write(path, fotoPerfil.getBytes());
+
+          
+            usuario.setFotoPerfil(fotoPerfilPath);
             usuarioService.agregar(usuario);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario agregado con éxito.");
+            return ResponseEntity.status(HttpStatus.CREATED).body("{\"message\":\"Usuario agregado con éxito.\"}");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"" + e.getMessage() + "\"}");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\":\"Error al guardar la imagen: " + e.getMessage() + "\"}");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error interno del servidor: " + e.getMessage());
+                    .body("{\"message\":\"Error interno del servidor: " + e.getMessage() + "\"}");
         }
     }
 
@@ -85,7 +106,7 @@ public class UsuarioController {
             usuario.setFotoPerfil(unUsuario.getFotoPerfil());
 
             usuarioService.actualizar(usuario);
-            return ResponseEntity.status(HttpStatus.OK).body("Usuario actualizada con éxito.");
+            return ResponseEntity.status(HttpStatus.OK).body("Usuario actualizado con éxito.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
