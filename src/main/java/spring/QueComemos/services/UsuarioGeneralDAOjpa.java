@@ -22,7 +22,9 @@ public class UsuarioGeneralDAOjpa {
     public Optional<UsuarioGeneral> obtenerPorDni(int dni) {
         return usuarioGeneralDAO.findByDni(dni);
     }
-
+    public Optional<UsuarioGeneral> obtenerPorEmail(String email) { 
+    	return usuarioGeneralDAO.findByEmail(email); 
+   }
     public List<UsuarioGeneral> listar() {
         return usuarioGeneralDAO.findAll();
     }
