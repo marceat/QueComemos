@@ -1,16 +1,18 @@
 export class Menu {
 
     public id: number;
-    public nombreMenu: string;
-    public entrada: string;
-    public platoPrincipal: string;
-    public postre: string;
-    public bebida: string;
-    public tipoMenu: string;
+    public nombreMenu: String;
+    public entrada: String;
+    public platoPrincipal: String;
+    public postre: String;
+    public bebida: String;
+    public tipoMenu: String;
     public precio: number;
+    public image: String;
+    public cantidad: number;
 
-    constructor (id: number, nombre: string, entrada: string, plato: string, 
-        postre: string, bebida: string, precio: number, tipoM: string){
+    constructor (id: number, nombre: String, entrada: String, plato: String, 
+        postre: String, bebida: String, precio: number, tipoM: String, image: String){
             this.id = id;
             this.nombreMenu = nombre;
             this.entrada = entrada;
@@ -19,6 +21,9 @@ export class Menu {
             this.bebida = bebida;
             this.tipoMenu = tipoM;
             this.precio = precio;
+            this.image = image;
+            this.cantidad = 0;
+
         }
 }
 

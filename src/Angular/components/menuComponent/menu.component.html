@@ -90,16 +90,18 @@
 </head>
 <body>
     <div class="container">
-        <div class="card-list">
         <img src="buffet.jpg" alt="Logo de la Universidad" class="logo">
+
             <h1>Buffet Universitario - Menú Semanal</h1>
-            
-            <div class="card-menu">
-                <h2>Viernes</h2>
+            <h2>Viernes</h2>
+
+            <div class="card-list">
+                
                 @for (menuActual of listaMenues; track menuActual.id) {
                 <div class="card-content">
-                    <h3></h3>
+            
                     <card-menu
+                        [id]="menuActual.id"
                         [nombreMenu]="menuActual.nombreMenu"
                         [entrada]="menuActual.entrada"
                         [platoPrincipal]="menuActual.platoPrincipal"
@@ -107,21 +109,45 @@
                         [bebida]="menuActual.bebida"
                         [tipoMenu]="menuActual.tipoMenu"
                         [precio]=menuActual.precio
-                        [image]="menuActual.image">
+                        [image]="menuActual.image"
+                        (agregarMenuAlCarrito)="agregarAlCarrito($event)">
                     </card-menu>
                 </div>
                 }
             </div>
-        </div>
         
         <!-- Repetir estructura similar para Martes, Miércoles, Jueves y Viernes -->
         
         <div id="cart">
-            <h2>Carrito de Compras</h2>
-            <div id="cart-items">
+            <h2><mat-icon>shopping_cart</mat-icon>  Carrito de Compras</h2>
+            <div class="cart-items">
                 <!-- Aquí se listarían los items agregados dinámicamente -->
+                 <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Operaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="cart-item">
+                    @for (menuActual of listaCarrito; track menuActual.id) {
+                            <tr>
+                                <td> <h3> {{menuActual.nombreMenu}} </h3> </td>
+                                <td> <h3> {{menuActual.cantidad}} </h3> </td>
+                                <td> <h3> ${{menuActual.precio * menuActual.cantidad}} </h3> </td>
+                                <td>
+                                    <button><mat-icon (click)="sumarUnoCantidadExistenteCarrito(menuActual)">add_circle</mat-icon> </button>
+                                    <button><mat-icon (click)="restarUnoCantidadExistenteCarrito(menuActual)">arrow_downward</mat-icon> </button>
+                                    <button><mat-icon (click)="eliminarDelCarrito(menuActual)">cancel</mat-icon> </button>
+                                </td>
+                            </tr>
+                    }
+                    </tbody>
+                </table>
             </div>
-            <div id="total">Total: $0.00</div>
+            <div id="total">Total: ${{totalCarrito}}</div>
         </div>
         
         <div class="action-buttons">
