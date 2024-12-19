@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/usuario", produces = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(value = "/api/usuario_general", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class UsuarioController {
 
     @Autowired
