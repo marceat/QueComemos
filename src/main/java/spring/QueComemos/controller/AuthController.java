@@ -11,8 +11,8 @@ import spring.QueComemos.model.LoginRequest;
 import spring.QueComemos.model.JwtResponse;
 
 @RestController
-@RequestMapping("/api/auth")
-public class LoginController {
+@RequestMapping("/api")
+public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
