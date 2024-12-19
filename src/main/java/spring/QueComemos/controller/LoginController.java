@@ -1,5 +1,6 @@
 package spring.QueComemos.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,10 +24,10 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
         );
 
-        String token = jwtTokenUtil.generateToken(loginRequest.getUsername());
+        String token = jwtTokenUtil.generateToken(loginRequest.getEmail());
         return ResponseEntity.ok(new JwtResponse(token));
     }
 }
