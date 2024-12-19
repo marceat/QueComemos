@@ -40,8 +40,7 @@ export class RegistroComponent {
       email: this.email,
       contraseña: this.password,
       preferenciasAlimentarias: this.preferenciasAlimentarias,
-      rol: this.rol,
-      fotoPerfil: this.fotoPerfil ? this.fotoPerfil.name : ''
+      rol: this.rol
     };
 
     const formData = new FormData();
@@ -50,19 +49,18 @@ export class RegistroComponent {
       formData.append('fotoPerfil', this.fotoPerfil, this.fotoPerfil.name);
     }
 
-    this.http.post('/api/usuario/agregar', formData)
-      .subscribe(
-        (response: any) => {
-          alert("Registro exitoso: " + response.message);
-          this.router.navigate(['/login']);
-        },
-        error => {
-          if (error.error && error.error.message) {
-            alert("Error en el registro: " + error.error.message);
-          } else {
-            alert("Error en el registro: " + error.message);
-          }
+    this.http.post('/api/usuario/agregar', formData).subscribe(
+      (response: any) => {
+        alert("Registro exitoso: " + response.message);
+        this.router.navigate(['/login']);
+      },
+      error => {
+        if (error.error && error.error.message) {
+          alert("Error en el registro: " + error.error.message);
+        } else {
+          alert("Error en el registro: " + error.message);
         }
-      );
+      }
+    );
   }
 }
