@@ -51,7 +51,7 @@ export class MenuEditarComponent implements OnInit {
  
        //console.log(menuJSON);
  
-       this.menuService.postMenu(menuJSON);
+       this.menuService.putMenu(menuJSON,this.id);
        this.resetearFormulario();
        this.toastSucess();
      } else {
@@ -85,18 +85,31 @@ export class MenuEditarComponent implements OnInit {
      this.router.navigate(['home']);
    }
 
-   obtenerMenu(id: any){
-      this.menuService.getMenu(id);
+   async obtenerMenu(id: any): Promise<boolean>{
+      try {
+        let menuObtenido = (await this.menuService.getMenu(id)).data;
+        //console.log(response);
+        this.nombreMenu = menuObtenido.nombreMenu;
+        this.entrada = menuObtenido.entrada;
+        this.platoPrincipal = menuObtenido.platoPrincipal;
+        this.bebida = menuObtenido.bebida;
+        this.postre = menuObtenido.postre;
+        this.precio = menuObtenido.precio;
+        this.image = menuObtenido.image;
+        this.tipoMenu = menuObtenido.tipoMenu;
+        return true;
+      } catch {
+        return false;
+      }
    }
  
    ngOnInit():void {
     //primero obtengo el id, recibido por parámetro.
     this.id=this.route.snapshot.paramMap.get('id');
-    this.obtenerMenu(this.id);
+    const idToNumber = Number(this.id);
     
-
-
-     //console.log("ACÁ ESTÁ EL ID: "+this.route.snapshot.paramMap.get('id'));
+    //Si lo encuentra...
+    this.obtenerMenu(idToNumber);
    }
  
  }
