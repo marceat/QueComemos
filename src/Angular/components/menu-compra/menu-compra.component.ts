@@ -8,8 +8,8 @@ import {MatIconModule} from '@angular/material/icon';
 @Component({
   selector: 'app-menu',
   imports: [ CardMenu, MatIconModule ],
-  templateUrl: './menu.component.html',
-  styleUrl: './menu.component.css'
+  templateUrl: './menu-compra.component.html',
+  styleUrl: './menu-compra.component.css'
 })
 
 export class MenuComponent {
@@ -18,7 +18,7 @@ export class MenuComponent {
     totalCarrito: number = 0;
 
     constructor(private menuService: MenuService) {
-
+      
     }
 
     sumarUnoCantidadExistenteCarrito(menu: Menu) {

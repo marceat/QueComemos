@@ -1,0 +1,137 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Menú - Buffet Universitario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #6B0F1A;;
+        }
+         .logo {
+        width: 150px;
+        margin: 0 auto 1.5rem;
+        display: block;
+    }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+            <img src="buffet.jpg" alt="Logo de la Universidad" class="logo">
+            <h1>Gestión de Menú - Buffet Universitario</h1>
+        
+        <h2>Crear Menú del Día</h2>
+        <form #menuForm="ngForm" (ngSubmit)="onSubmit(menuForm)">
+
+         	  <label for="nombreMenu" class="form-item-label">Nombre: </label>
+            <input type="text" id="nombreMenu" name="nombreMenu" class="form-control" required [(ngModel)]="nombreMenu" #campoNombre="ngModel">
+            <div [hidden]="campoNombre.valid" class="alert-form" >
+              El nombre es requerido.
+            </div>
+            
+            <label for="entrada" class="form-item-label">Entrada:</label>
+            <input type="text" id="entrada" name="entrada" required [(ngModel)]="entrada" #campoEntrada="ngModel">
+            <div [hidden]="campoEntrada.valid" class="alert-form" >
+              El nombre es requerido.
+            </div>
+            
+            <label for="platoPrincipal" class="form-item-label">Plato Principal:</label>
+            <input type="text" id="platoPrincipal" name="platoPrincipal" required [(ngModel)]="platoPrincipal" #campoPlato="ngModel">
+            <div [hidden]="campoPlato.valid" class="alert-form" >
+              El plato principal es requerido.
+            </div>
+
+            <label for="postre" class="form-item-label">Postre:</label>
+            <input type="text" id="postre" name="postre" required [(ngModel)]="postre" #campoPostre="ngModel">
+            <div [hidden]="campoPostre.valid" class="alert-form" >
+              El postre es requerido.
+            </div>
+
+            <label for="bebida" class="form-item-label">Bebida:</label>
+            <input type="text" id="bebida" name="bebida" required [(ngModel)]="bebida" #campoBebida="ngModel">
+            <div [hidden]="campoBebida.valid" class="alert-form" >
+              El postre es requerido.
+            </div>
+            
+            <label for="tipoMenu" class="form-item-label">Tipo de menú:</label>
+            <select id="rol" [(ngModel)]="tipoMenu" name="rol" class="form-control" required #campoTipoMenu="ngModel">
+              <option value="VEGETARIANO">VEGETARIANO</option>
+              <option value="NO VEGETARIANO">NO VEGETARIANO</option>
+            </select>
+            <div [hidden]="campoTipoMenu.valid" class="alert-form" >
+              El tipo de menu es requerido.
+            </div>
+
+            <label for="precio" class="form-item-label">Precio:</label>
+            <input type="number" id="precio" name="precio" required [(ngModel)]="precio" #campoPrecio>
+            <div [hidden]="campoPrecio.valid" class="alert-form" >
+              El precio es requerido.
+            </div>
+
+            <label for="image" class="form-item-label">Imagen:</label>
+            <input type="file" id="image" name="image" required [(ngModel)]="image" #campoImagen="ngModel">
+            <div [hidden]="campoImagen.valid" class="alert-form" >
+              La imagen del menú es requerida.
+            </div>
+
+            <button type="submit">Guardar Menú</button>   
+            <button (click)="onCancel()">Volver</button>
+        </form>
+    </div>
+
+    
+</body>
+</html>

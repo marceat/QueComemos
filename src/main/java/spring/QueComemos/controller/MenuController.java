@@ -24,7 +24,7 @@ import spring.QueComemos.services.ComidaDAOjpa;
 import spring.QueComemos.services.MenuDAOjpa;
 import spring.QueComemos.model.Menu;
 
-@CrossOrigin(maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping(value="/api/menu",produces = {MediaType.APPLICATION_JSON_VALUE})
 public class MenuController {
@@ -45,7 +45,6 @@ public class MenuController {
 	}
 	
 	//================================ LISTAR  =====================================
-	
 	@GetMapping
 	public ResponseEntity<List<Menu>> listarMenu(){
 		List<Menu> menuesObtenidos = (ArrayList<Menu>) menuService.listar();
@@ -58,7 +57,6 @@ public class MenuController {
 	}
 	
 	//================================ AGREGAR  =====================================
-	
 	@PostMapping("/agregar")
 	public ResponseEntity<String> crearMenu(@Valid @RequestBody Menu menu){
 		//System.out.println("Creando la menu: "+menu.getNombreMenu());
@@ -113,7 +111,6 @@ public class MenuController {
 	}
 	
 	//================================ ELIMINAR   =====================================
-	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Menu> eliminarMenu(@PathVariable("id") int id){
 		System.out.println("Obteniendo y eliminando el menu con id: "+id);

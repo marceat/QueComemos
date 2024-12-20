@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
-import { MenuComponent } from '../../components/menuComponent/menu.component';
+import { MenuComponent } from '../../components/menu-compra/menu-compra.component';
 
 export const routes: Routes = [
-    { path: 'menu', component: MenuComponent },
+
 ];

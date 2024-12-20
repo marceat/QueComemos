@@ -1,0 +1,40 @@
+<div class="container">
+  <h2><mat-icon>restaurant</mat-icon>  Menúes disponibles </h2>
+      <!-- Aquí se listarían los items agregados dinámicamente -->
+       <table>
+          <thead>
+              <tr>
+                  <th>Nombre</th>
+                  <th>Plato principal</th>
+                  <th>Entrada</th>
+                  <th>Bebida</th>
+                  <th>postre</th>
+                  <th>Tipo de menú</th>
+                  <th>precio</th>
+                  <th>Operaciones</th>
+              </tr>
+          </thead>
+          <tbody class="list">
+          @for (menuActual of listaMenues; track menuActual.id) {
+                  <tr>
+                      <td> <div class="item-list"> {{menuActual.nombreMenu}} </div> </td>
+                      <td> <div class="item-list"> {{menuActual.platoPrincipal}} </div> </td>
+                      <td> <div class="item-list"> {{menuActual.entrada}} </div> </td>
+                      <td> <div class="item-list"> {{menuActual.bebida}} </div> </td>
+                      <td> <div class="item-list"> {{menuActual.postre}} </div> </td>
+                      <td> <div class="item-list"> {{menuActual.tipoMenu}} </div> </td>
+                      <td> <div class="item-list"> ${{menuActual.precio}} </div> </td>
+                      <td>
+                          <button><mat-icon (click)="editar(menuActual)">edit</mat-icon> </button>
+                          <button><mat-icon (click)="eliminar(menuActual)">close</mat-icon> </button>
+                      </td>
+                  </tr>
+          }
+          </tbody>
+      </table>
+</div>
+
+<div class="action-buttons">
+  <button id="cancel">Cancelar</button>
+</div>
+
