@@ -33,6 +33,7 @@ public class MenuController {
 	MenuDAOjpa menuService; 
 	
 	//================================ OBTENER  =====================================
+	@CrossOrigin
 	@GetMapping("/{id}")
 	public ResponseEntity<Menu> obtenerMenuPorId(@PathVariable("id") int id){
 		Optional<Menu> menuObtenido = menuService.obtenerPorId(id);
@@ -45,6 +46,7 @@ public class MenuController {
 	}
 	
 	//================================ LISTAR  =====================================
+	@CrossOrigin
 	@GetMapping
 	public ResponseEntity<List<Menu>> listarMenu(){
 		List<Menu> menuesObtenidos = (ArrayList<Menu>) menuService.listar();
