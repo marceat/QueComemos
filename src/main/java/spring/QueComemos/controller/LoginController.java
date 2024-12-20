@@ -19,7 +19,8 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UsuarioGeneral credentials) {
         Optional<UsuarioGeneral> usuario = usuarioService.obtenerPorDni(credentials.getDni());
-
+        
+        System.out.println("Comparando: "+credentials.getDni());
         if (!usuario.isPresent() || !usuario.get().getContraseña().equals(credentials.getContraseña())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"message\":\"Usuario o contraseña incorrectos\"}");
         }

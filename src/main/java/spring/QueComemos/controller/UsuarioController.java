@@ -53,32 +53,29 @@ public class UsuarioController {
 
     //================================ AGREGAR =====================================
 
-    @PostMapping(value = "/agregar", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<String> crearUsuario(@Valid @RequestPart("usuario") UsuarioGeneral usuario, @RequestPart("fotoPerfil") MultipartFile fotoPerfil) {
+    @PostMapping("/agregar")
+    public ResponseEntity<String> crearUsuario(@Valid @RequestBody UsuarioGeneral usuario) throws IOException {
         try {
             if (usuarioService.existe(usuario.getDni())) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("{\"message\":\"Ya existe el usuario con el dni/id: " + usuario.getDni() + "\"}");
             }
 
             // Guardar la imagen en el directorio `resources/images`
-            String uploadsDir = "src/main/resources/images/";
-            String fotoPerfilPath = uploadsDir + fotoPerfil.getOriginalFilename();
-            File dir = new File(uploadsDir);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-            Path path = Paths.get(fotoPerfilPath);
-            Files.write(path, fotoPerfil.getBytes());
+            //String uploadsDir = "src/main/resources/images/";
+            //String fotoPerfilPath = uploadsDir + usuario.getFotoPerfil();// .getOriginalFilename();
+            //File dir = new File(uploadsDir);
+            //if (!dir.exists()) {
+            //    dir.mkdirs();
+            //}
+            //Path path = Paths.get(fotoPerfilPath);
+            //Files.write(path, usuario.getFotoPerfil().getBytes());
 
           
-            usuario.setFotoPerfil(fotoPerfilPath);
+            //usuario.setFotoPerfil(fotoPerfilPath);
             usuarioService.agregar(usuario);
             return ResponseEntity.status(HttpStatus.CREATED).body("{\"message\":\"Usuario agregado con éxito.\"}");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"" + e.getMessage() + "\"}");
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\":\"Error al guardar la imagen: " + e.getMessage() + "\"}");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\":\"Error interno del servidor: " + e.getMessage() + "\"}");
