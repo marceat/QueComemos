@@ -49,7 +49,7 @@ export class RegistroComponent {
       formData.append('fotoPerfil', this.fotoPerfil, this.fotoPerfil.name);
     }
 
-    this.http.post('/api/usuario/agregar', formData).subscribe(
+    this.http.post('http://localhost:8086/api/usuario_general/agregar', formData).subscribe(
       (response: any) => {
         alert("Registro exitoso: " + response.message);
         this.router.navigate(['/login']);
