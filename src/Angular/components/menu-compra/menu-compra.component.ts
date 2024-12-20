@@ -4,6 +4,7 @@ import { CardMenu } from '../card/card.component';
 import axios from 'axios';
 import { MenuService } from '../../services/menu.service'
 import {MatIconModule} from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -17,7 +18,7 @@ export class MenuComponent {
     listaCarrito: Array<Menu> = [];
     totalCarrito: number = 0;
 
-    constructor(private menuService: MenuService) {
+    constructor(private menuService: MenuService, private router: Router) {
       
     }
 
@@ -83,12 +84,18 @@ export class MenuComponent {
       this.listaCarrito = this.listaCarrito.sort();
     }
 
+    onCancel(){
+      this.router.navigate(['home']);
+    }
+
     ngOnInit() {
       this.menuService.getMenues().then(response => {
         this.listaMenues = response.data;
         console.log(this.listaMenues);
       });
     }
+
+    
 }
 
 

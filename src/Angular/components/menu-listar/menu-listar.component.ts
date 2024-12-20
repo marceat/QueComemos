@@ -25,6 +25,10 @@ export class MenuListarComponent implements OnInit {
     });
   }
 
+  onCancel(){
+    this.router.navigate(['home']);
+  }
+
   editar(menu: Menu){ 
     this.router.navigate(['menu/editar/', menu.id]);
   }
