@@ -37,10 +37,14 @@ export class LoginComponent {
     if(this.authService.login(credentialsJSON)){
       console.log(this.authService.login(credentialsJSON));
       this.usuarioLogeado = (await (this.authService.getUsuario(credentials.dni))).data;
-      this.toastSucess();
+      if(this.usuarioLogeado.nombre!=null){
+        this.toastSucess();
+      } else {
+        this.toastError("Usuario incorrecto.");
+      }
       //console.log("daleeeeeeeeeeee", this.usuarioLogeado);
     } else {
-      this.toastError();
+      this.toastError("Error.");
     }
 
 
@@ -64,8 +68,8 @@ export class LoginComponent {
     this.toastr.success("Usuario logeado exitosamente!.", 'ÉXITO!');
   }
 
-  toastError(){
+  toastError(mensaje: string){
     this.toastr.clear();
-    this.toastr.error("", 'ERROR');
+    this.toastr.error(mensaje, 'ERROR');
   }
 }
