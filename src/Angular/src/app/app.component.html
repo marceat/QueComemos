@@ -2,8 +2,12 @@
     <header>
       <nav>
         <ul>
-          <li><a routerLink="/login">Login</a></li>
-          <li><a routerLink="/registro">Registrarse</a></li>
+          @if ( [(current_user)] != 'HOLA') {
+            <li><a routerLink="/login">Login</a></li>
+            <li><a routerLink="/registro">Registrarse</a></li>
+          } @else {
+            <li><button (click)="logout()">Cerrar sesión</button></li>
+          }
           
         </ul>
       </nav>

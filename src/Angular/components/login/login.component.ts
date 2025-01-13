@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from 'services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent {
 
   usuarioLogeado;
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService) {}
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService, private userService: UserService) {}
+
 
   async onSubmit() {
     
@@ -36,13 +38,26 @@ export class LoginComponent {
     let credentialsJSON = JSON.stringify(credentials);
     if(this.authService.login(credentialsJSON)){
       console.log(this.authService.login(credentialsJSON));
+
+      //Obtengo el usuario entero en formato json, al cual acceder con los campos asi:  usuarioLogeado['nombre'] 
       this.usuarioLogeado = (await (this.authService.getUsuario(credentials.dni))).data;
+
+      //console.log(this.usuarioLogeado['nombre']);
+
+      //----------- ACTUALIZO LA INFORMACIÓN DE LA "SESION" ---------------------//
+      this.userService.sessionIn(this.usuarioLogeado['nombre']);
+      //console.log(this.userService.current_user);
+      //--------------------------------------------------------------------------
+     
+
       if(this.usuarioLogeado.nombre!=null){
+        
+
         this.toastSucess();
       } else {
         this.toastError("Usuario incorrecto.");
       }
-      //console.log("daleeeeeeeeeeee", this.usuarioLogeado);
+      
     } else {
       this.toastError("Error.");
     }
