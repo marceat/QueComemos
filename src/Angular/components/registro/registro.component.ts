@@ -75,5 +75,38 @@ export class RegistroComponent {
     } else {
 
     }
+<<<<<<< HEAD
+=======
+
+    const usuario = {
+      dni: this.dni,
+      nombre: this.nombre,
+      apellido: this.apellido,
+      email: this.email,
+      contraseña: this.password,
+      preferenciasAlimentarias: this.preferenciasAlimentarias,
+      rol: this.rol
+    };
+
+    const formData = new FormData();
+    formData.append('usuario', new Blob([JSON.stringify(usuario)], { type: 'application/json' }));
+    if (this.fotoPerfil) {
+      formData.append('fotoPerfil', this.fotoPerfil, this.fotoPerfil.name);
+    }
+
+    this.http.post('http://localhost:8086/api/usuario_general/agregar', formData).subscribe(
+      (response: any) => {
+        alert("Registro exitoso: " + response.message);
+        this.router.navigate(['/login']);
+      },
+      error => {
+        if (error.error && error.error.message) {
+          alert("Error en el registro: " + error.error.message);
+        } else {
+          alert("Error en el registro: " + error.message);
+        }
+      }
+    );
+>>>>>>> branch 'main' of https://github.com/marceat/QueComemos.git
   }
 }

@@ -1,24 +1,37 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
+<<<<<<< HEAD
 import { AuthService } from 'services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'services/user.service';
+=======
+import { RouterModule } from '@angular/router';
+>>>>>>> branch 'main' of https://github.com/marceat/QueComemos.git
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [FormsModule]
+  imports: [FormsModule, RouterModule]
 })
 export class LoginComponent {
+<<<<<<< HEAD
   username: number;
+=======
+  email: string = '';
+>>>>>>> branch 'main' of https://github.com/marceat/QueComemos.git
   password: string = '';
 
+<<<<<<< HEAD
   usuarioLogeado;
+=======
+  constructor(private authService: AuthService, private router: Router) {}
+>>>>>>> branch 'main' of https://github.com/marceat/QueComemos.git
 
+<<<<<<< HEAD
   constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService, private userService: UserService) {}
 
 
@@ -56,6 +69,22 @@ export class LoginComponent {
         this.toastSucess();
       } else {
         this.toastError("Usuario incorrecto.");
+=======
+  onSubmit() {
+    this.authService.login(this.email, this.password).subscribe(
+      (response: any) => {
+        this.authService.setToken(response.token);
+        alert("Inicio de sesión exitoso");
+        this.router.navigate(['/home']);
+      },
+      error => {
+        console.error('Error en el inicio de sesión', error);
+        if (error.error && error.error.message) {
+          alert("Error en el inicio de sesión: " + error.error.message);
+        } else {
+          alert("Error en el inicio de sesión: " + error.message);
+        }
+>>>>>>> branch 'main' of https://github.com/marceat/QueComemos.git
       }
       
     } else {

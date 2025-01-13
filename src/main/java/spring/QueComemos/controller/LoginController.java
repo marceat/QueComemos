@@ -1,22 +1,28 @@
 package spring.QueComemos.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import spring.QueComemos.model.UsuarioGeneral;
-import spring.QueComemos.services.UsuarioGeneralDAOjpa;
 
-import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+import spring.QueComemos.util.JwtTokenUtil;
+import spring.QueComemos.model.LoginRequest;
+import spring.QueComemos.model.JwtResponse;
 
 @RestController
-@RequestMapping(value = "/api", produces = "application/json")
+@RequestMapping("/api/auth")
 public class LoginController {
 
     @Autowired
-    private UsuarioGeneralDAOjpa usuarioService;
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/login")
+<<<<<<< HEAD
     public ResponseEntity<String> login(@RequestBody UsuarioGeneral credentials) {
         Optional<UsuarioGeneral> usuario = usuarioService.obtenerPorDni(credentials.getDni());
         
@@ -26,5 +32,14 @@ public class LoginController {
         }
 
         return ResponseEntity.ok("{\"message\":\"Inicio de sesión exitoso\"}");
+=======
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+        );
+
+        String token = jwtTokenUtil.generateToken(loginRequest.getEmail());
+        return ResponseEntity.ok(new JwtResponse(token));
+>>>>>>> branch 'main' of https://github.com/marceat/QueComemos.git
     }
 }

@@ -1,11 +1,11 @@
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
-import { environment } from './app/environment'; 
-import { provideRouter, withRouterConfig } from '@angular/router';
+import { environment } from './environments/environment.prod'; 
+import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
-import { importProvidersFrom } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { provideAnimations } from '@angular/platform-browser/animations';
 
@@ -17,7 +17,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(FormsModule),
+    importProvidersFrom(FormsModule, RouterModule),
     provideRouter([
       { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'login', loadComponent: () => import('../components/login/login.component').then(m => m.LoginComponent) },
