@@ -6,11 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import spring.QueComemos.util.JwtTokenUtil;
 import spring.QueComemos.model.LoginRequest;
 import spring.QueComemos.model.UsuarioGeneral;
 import spring.QueComemos.services.UsuarioGeneralDAOjpa;
@@ -25,9 +21,6 @@ public class LoginController {
 	
 	@Autowired
 	private UsuarioGeneralDAOjpa usuarioService;
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UsuarioGeneral credentials) {

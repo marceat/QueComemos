@@ -42,7 +42,9 @@ export class LoginComponent {
       console.log(this.authService.login(credentialsJSON));
 
       //Obtengo el usuario entero en formato json, al cual acceder con los campos asi:  usuarioLogeado['nombre'] 
-      this.usuarioLogeado = (await (this.authService.getUsuario(credentials.dni))).data;
+      //this.usuarioLogeado = (await (this.authService.getUsuario(credentials.dni))).data;
+      localStorage.setItem('nombre', (await this.authService.getUsuario(credentials.dni)).data);
+      console.log("REVISANDO LOCALSTORAGE - USUARIO:"+localStorage.getItem('nombre'));
 
       //console.log(this.usuarioLogeado['nombre']);
 
