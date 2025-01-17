@@ -27,6 +27,7 @@ bootstrapApplication(AppComponent, {
       { path: 'menu/crear', loadComponent: () => import('../components/menu-crear/menu-crear.component').then(m => m.MenuCrearComponent) },
       { path: 'menu/listar', loadComponent: () => import('../components/menu-listar/menu-listar.component').then(m => m.MenuListarComponent) },
       { path: 'menu/editar/:id', loadComponent: () => import('../components/menu-editar/menu-editar.component').then(m => m.MenuEditarComponent) },
+      {path: 'barra-navegacion', loadComponent: () => import('../components/barra-navegacion/barra-navegacion.component').then(m => m.BarraNavegacionComponent) }
     ]),
     provideAnimations(),
     provideToastr(),

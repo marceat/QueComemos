@@ -1,0 +1,14 @@
+<header>
+  <nav>
+    <ul>
+      @if (true) {
+        <!---  <li><a routerLink="/login">Login</a></li> -->
+        <li><button ><div (click)="onClickLogin()">Login</div></button></li>
+        <li><a routerLink="/registro">Registrarse</a></li>
+      } @else {
+        <li><button (click)="logout()">Cerrar sesión</button></li>
+      }
+      
+    </ul>
+  </nav>
+</header>

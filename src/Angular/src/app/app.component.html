@@ -1,17 +1,5 @@
 <div class="container">
-    <header>
-      <nav>
-        <ul>
-          @if ( [(current_user)] != 'HOLA') {
-            <li><a routerLink="/login">Login</a></li>
-            <li><a routerLink="/registro">Registrarse</a></li>
-          } @else {
-            <li><button (click)="logout()">Cerrar sesión</button></li>
-          }
-          
-        </ul>
-      </nav>
-    </header>
+    <app-barra-navegacion ></app-barra-navegacion>
     <main>
       <router-outlet></router-outlet>
     </main>
