@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
 import { Router } from '@angular/router';
-import { UserService } from './user.service';
 import { Injectable } from '@angular/core';
 
 
@@ -9,7 +8,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router, private userService: UserService) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   //login(username: string, password: string) {
   //  return this.http.post('/api/login', { username, password });

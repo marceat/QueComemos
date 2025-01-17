@@ -91,7 +91,7 @@ export class MenuComponent {
     ngOnInit() {
       this.menuService.getMenues().then(response => {
         this.listaMenues = response.data;
-        console.log(this.listaMenues);
+        //console.log(this.listaMenues);
       });
     }
 
