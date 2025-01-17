@@ -13,7 +13,7 @@ import spring.QueComemos.services.UsuarioGeneralDAOjpa;
 import spring.QueComemos.model.JwtResponse;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 public class LoginController {
 
     //@Autowired
