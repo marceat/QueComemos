@@ -5,6 +5,7 @@ import axios from 'axios';
 import { MenuService } from '../../services/menu.service'
 import {MatIconModule} from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-menu',
@@ -18,7 +19,7 @@ export class MenuComponent {
     listaCarrito: Array<Menu> = [];
     totalCarrito: number = 0;
 
-    constructor(private menuService: MenuService, private router: Router) {
+    constructor(private menuService: MenuService, private router: Router, private toastr: ToastrService) {
       
     }
 
@@ -36,14 +37,16 @@ export class MenuComponent {
     restarUnoCantidadExistenteCarrito(menu: Menu) {
       let menuEncontrado: Menu;
       menuEncontrado = this.listaCarrito.find(item => item.id == menu.id); //Lo encuentro y obtengo.
-      if (menuEncontrado.cantidad != 0) {
+      if (menuEncontrado.cantidad > 1) {
         this.listaCarrito = this.listaCarrito.filter(item => item.id !== menu.id); //Lo saco del array
         menuEncontrado.cantidad --;  
         this.listaCarrito.push(menuEncontrado);
         this.totalCarrito = this.totalCarrito - menu.precio;
 
         this.actualizarPrecioTotalCarrito();
-        
+        this.toastSucess("ELIMINADO DEL CARRITO",menu.nombreMenu);
+      } else {
+        this.eliminarDelCarrito(menu);
       }
     }
 
@@ -53,6 +56,7 @@ export class MenuComponent {
 
       
       this.actualizarPrecioTotalCarrito();
+      this.toastSucess("ELIMINADO DEL CARRITO",menu.nombreMenu);
       
     }
 
@@ -71,6 +75,7 @@ export class MenuComponent {
       }
       
       this.actualizarPrecioTotalCarrito();
+      this.toastSucess("AGREGADO AL CARRITO",menu.nombreMenu);
     }
     
     existeEnElCarrito(menu: Menu): boolean {
@@ -95,6 +100,15 @@ export class MenuComponent {
       });
     }
 
+    toastSucess(mensajeTitulo, mensajeSubtitulo){
+      this.toastr.clear();
+      this.toastr.success(mensajeSubtitulo,mensajeTitulo);
+    }
+  
+    toastError(mensaje: string){
+      this.toastr.clear();
+      this.toastr.error(mensaje, 'ERROR');
+    }
     
 }
 

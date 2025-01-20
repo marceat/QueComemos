@@ -5,7 +5,6 @@ import { AuthService } from 'services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { SessionService } from 'services/session.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +20,7 @@ export class LoginComponent {
 
   usuarioLogeado;
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService, private sessionService: SessionService) {}
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService) {}
 
 
   async onSubmit() {
@@ -42,40 +41,27 @@ export class LoginComponent {
       //console.log(this.authService.login(credentialsJSON));
 
       //Obtengo el usuario entero en formato json, al cual acceder con los campos asi:  usuarioLogeado['nombre'] 
-      //this.usuarioLogeado = (await (this.authService.getUsuario(credentials.dni))).data;
+      this.usuarioLogeado = (await (this.authService.getUsuario(credentials.dni))).data;
       
       //----------- ACTUALIZO LA INFORMACIÓN DE LA "SESION" ---------------------//
       localStorage.setItem('nombre', (await this.authService.getUsuario(credentials.dni)).data['nombre']);
-      
+      localStorage.setItem('estado_session', 'logeado');
       //console.log("REVISANDO LOCALSTORAGE 'login.component.ts'- USUARIO:"+localStorage.getItem('nombre'));
       //--------------------------------------------------------------------------
 
       if(this.usuarioLogeado.nombre!=null){
-        
-
+        window.location.reload();
+        this.router.navigate(['home']);
         this.toastSucess();
       } else {
         this.toastError("Usuario incorrecto.");
       }
+
+      
       
     } else {
       this.toastError("Error.");
     }
-
-
-    //this.http.post('/api/login', credentialsJSON).subscribe(
-    //  (response: any) => {
-    //    alert("Inicio de sesión exitoso");
-    //    this.router.navigate(['/home']);
-    //  },
-    //  error => {
-    //    if (error.error && error.error.message) {
-    //      alert("Error en el inicio de sesión: " + error.error.message);
-    //    } else {
-    //      alert("Error en el inicio de sesión: " + error.message);
-    //    }
-      //}
-    //);
   }
 
   toastSucess(){

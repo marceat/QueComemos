@@ -1,12 +1,17 @@
 <header>
   <nav>
     <ul>
-      @if (true) {
+      
+      @if (estado_session == "logeado") {
         <!---  <li><a routerLink="/login">Login</a></li> -->
-        <li><button ><div (click)="onClickLogin()">Login</div></button></li>
-        <li><a routerLink="/registro">Registrarse</a></li>
+        <li>
+          <div class=""><mat-icon>person</mat-icon> ¡Hola {{nombre}}!</div>
+        </li>
+        <li><button type="button" class="btn btn-danger" (click)="logout()">Cerrar sesión</button></li>
+        
       } @else {
-        <li><button (click)="logout()">Cerrar sesión</button></li>
+        <li><button type="button" class="btn btn-danger"><div (click)="onClickLogin()">Iniciar sesión</div></button></li>
+        <li><button type="button" class="btn btn-danger"><div (click)="onClickRegister()">Registrarse</div></button></li>
       }
       
     </ul>
